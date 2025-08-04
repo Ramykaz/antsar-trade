@@ -88,12 +88,8 @@ const Home = () => {
       {/* Footer */}
       <footer className={styles.footer}>
         <div className={styles.container}>
-          <p>© 2024 ANTSAR Foreign Trade Agency. All rights reserved.</p>
-          <div className={styles.footerLinks}>
-            <a href="/about">About Us</a>
-            <a href="/services">Services</a>
-            <a href="/contact">Contact</a>
-          </div>
+
+        
         </div>
       </footer>
     </div>
