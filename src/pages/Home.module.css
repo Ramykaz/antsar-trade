@@ -1,197 +1,325 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Arial', sans-serif;
+/* Modern Elegant Home Styling */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Montserrat:wght@300;400;500&display=swap');
+
+:root {
+  --black: #1a1a1a;
+  --white: #ffffff;
+  --gray-1: #f5f5f5;
+  --gray-2: #e0e0e0;
+  --gray-3: #8c8c8c;
+  --font-heading: 'Cormorant Garamond', serif;
+  --font-body: 'Montserrat', sans-serif;
+}
+
+/* Base Styles */
+.home {
+  width: 100%;
+  color: var(--black);
+  font-family: var(--font-body);
+  line-height: 1.7;
 }
 
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 2rem;
 }
 
 /* Hero Section */
-.home {
-  width: 100%;
-}
-
 .hero {
-  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
-              url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
-  background-size: cover;
-  background-position: center;
-  height: 80vh;
+  position: relative;
+  height: 100vh;
   display: flex;
   align-items: center;
-  color: white;
+  justify-content: center;
   text-align: center;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.7));
+  z-index: 1;
+}
+
+.heroImage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(30%) contrast(110%);
 }
 
 .heroContent {
-  padding: 2rem;
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+  padding: 0 2rem;
+  color: var(--white);
 }
 
 .hero h1 {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-  font-weight: 700;
+  font-family: var(--font-heading);
+  font-size: 4.5rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+  letter-spacing: 1px;
+  line-height: 1.2;
+  text-transform: uppercase;
 }
 
 .hero p {
-  font-size: 1.5rem;
-  margin-bottom: 2rem;
+  font-size: 1.4rem;
+  font-weight: 300;
+  margin-bottom: 3rem;
+  letter-spacing: 0.5px;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .ctaButton {
-  background: #0ea5e9;
-  color: white;
-  border: none;
-  padding: 12px 30px;
-  font-size: 1.2rem;
-  border-radius: 5px;
+  background: transparent;
+  color: var(--white);
+  border: 2px solid var(--white);
+  padding: 1rem 2.5rem;
+  font-size: 1.1rem;
+  font-family: var(--font-body);
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: all 0.3s ease;
+  border-radius: 0;
 }
 
 .ctaButton:hover {
-  background: #0284c7;
+  background: var(--white);
+  color: var(--black);
 }
 
 /* What We Do Section */
 .whatWeDo {
-  padding: 4rem 0;
-  background: #f8fafc;
+  padding: 6rem 0;
+  background: var(--white);
 }
 
-.whatWeDo h2 {
+.sectionHeader {
   text-align: center;
-  font-size: 2.5rem;
-  margin-bottom: 2rem;
-  color: #1e293b;
+  margin-bottom: 4rem;
 }
 
-.servicesGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
-}
-
-.serviceCard {
-  background: white;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s;
-}
-
-.serviceCard:hover {
-  transform: translateY(-5px);
-}
-
-.serviceCard h3 {
-  font-size: 1.3rem;
+.sectionTitle {
+  font-family: var(--font-heading);
+  font-size: 2.8rem;
+  font-weight: 500;
+  color: var(--black);
   margin-bottom: 1rem;
-  color: #0ea5e9;
+  position: relative;
+  display: inline-block;
 }
 
-.serviceCard p {
-  color: #64748b;
+.sectionTitle::after {
+  content: '';
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 2px;
+  background: var(--black);
 }
 
-/* Why Choose Us Section */
-.whyUs {
-  padding: 4rem 0;
-  background: white;
-}
-
-.whyUs h2 {
-  text-align: center;
-  font-size: 2.5rem;
-  margin-bottom: 2rem;
-  color: #1e293b;
-}
-
-.benefitsList {
-  list-style: none;
-  max-width: 600px;
+.sectionSubtitle {
+  font-size: 1.2rem;
+  color: var(--gray-3);
+  max-width: 700px;
   margin: 0 auto;
 }
 
-.benefitsList li {
-  font-size: 1.2rem;
-  padding: 0.8rem 0;
-  border-bottom: 1px solid #e2e8f0;
+.serviceRow, .benefitRow {
   display: flex;
-  align-items: center;
-  gap: 10px;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.serviceCard, .benefitCard {
+  flex: 1;
+  min-width: 280px;
+  max-width: 400px;
+}
+
+/* Update grid styles */
+.servicesGrid, .benefitsGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+/* Ensure proper spacing */
+.whatWeDo, .whyChooseUs, .industries {
+  padding: 5rem 0;
+}
+
+/* Hero section should have no bottom margin */
+.hero {
+  margin-bottom: 0;
+}
+.servicesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2.5rem;
+  margin-top: 3rem;
+}
+
+.serviceCard {
+  background: var(--white);
+  padding: 2.5rem;
+  border: 1px solid var(--gray-2);
+  transition: all 0.4s ease;
+  text-align: center;
+}
+
+.serviceCard:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.05);
+  border-color: var(--black);
+}
+
+.serviceCard h3 {
+  font-family: var(--font-heading);
+  font-size: 1.6rem;
+  font-weight: 500;
+  margin: 1.5rem 0;
+  color: var(--black);
+}
+
+.serviceCard p {
+  color: var(--gray-3);
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+/* Why Choose Us Section */
+.whyChooseUs {
+  padding: 6rem 0;
+  background: var(--gray-1);
+}
+
+.benefitsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 3rem;
+  margin-top: 4rem;
+}
+
+.benefitCard {
+  background: var(--white);
+  padding: 2.5rem;
+  text-align: center;
+  border: 1px solid var(--gray-2);
+  transition: all 0.4s ease;
+}
+
+.benefitCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.03);
+}
+
+.benefitIcon {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  color: var(--black);
+}
+
+.benefitCard h3 {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  color: var(--black);
+}
+
+.benefitCard p {
+  color: var(--gray-3);
+  font-size: 1rem;
+  line-height: 1.8;
 }
 
 /* Featured Industries Section */
 .industries {
-  padding: 4rem 0;
-  background: #f8fafc;
-}
-
-.industries h2 {
-  text-align: center;
-  font-size: 2.5rem;
-  margin-bottom: 2rem;
-  color: #1e293b;
+  padding: 6rem 0;
+  background: var(--white);
 }
 
 .industriesGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
+  gap: 2.5rem;
+  margin-top: 4rem;
 }
 
 .industryCard {
-  background: white;
-  padding: 1.5rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s;
+  background: var(--white);
+  padding: 2rem;
+  border: 1px solid var(--gray-2);
+  transition: all 0.4s ease;
+  text-align: center;
 }
 
 .industryCard:hover {
   transform: translateY(-5px);
+  border-color: var(--black);
 }
 
 .industryCard h3 {
-  font-size: 1.3rem;
-  margin-bottom: 0.8rem;
-  color: #0ea5e9;
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  color: var(--black);
 }
 
 .industryCard p {
-  color: #64748b;
+  color: var(--gray-3);
+  font-size: 1rem;
+  line-height: 1.8;
 }
 
-/* Footer */
-.footer {
-  background: #1e293b;
-  color: white;
-  padding: 2rem 0;
-  text-align: center;
-}
 
-.footer p {
-  margin-bottom: 1rem;
-}
 
-.footerLinks {
-  display: flex;
-  justify-content: center;
-  gap: 1.5rem;
-}
+/* Responsive Design */
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 3rem;
+  }
 
-.footerLinks a {
-  color: white;
-  text-decoration: none;
-  transition: color 0.3s;
-}
+  .hero p {
+    font-size: 1.2rem;
+  }
 
-.footerLinks a:hover {
-  color: #0ea5e9;
+  .sectionTitle {
+    font-size: 2.2rem;
+  }
+
+  .servicesGrid,
+  .benefitsGrid,
+  .industriesGrid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .footerLinks {
+    flex-direction: column;
+    gap: 1rem;
+  }
 }
