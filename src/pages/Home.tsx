@@ -1,25 +1,30 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styles from './Home.module.css';
-import { FaGlobe, FaChartLine, FaShieldAlt, FaLanguage } from 'react-icons/fa';
+import { FiGlobe, FiTrendingUp, FiShield, FiCompass, FiBox, FiShoppingBag, FiCoffee, FiHome } from 'react-icons/fi';
 import heroImage from '../assets/hero-image.jpg';
 
 const industries = [
   {
     title: "Agriculture",
-    description: "Sourcing of coffee, spices, cereals, oilseeds, and more.",
+    icon: <FiCoffee />,
+    description: "Premium sourcing of coffee, spices, and agricultural commodities"
   },
   {
-    title: "Construction Materials",
-    description: "Export/import of iron rods, tiles, and industrial materials.",
+    title: "Construction",
+    icon: <FiHome />,
+    description: "Building materials and industrial supplies"
   },
   {
-    title: "Textiles & Apparel",
-    description: "Connecting buyers with garment manufacturers.",
+    title: "Textiles",
+    icon: <FiShoppingBag />,
+    description: "Quality garment manufacturing connections"
   },
   {
-    title: "Food & Beverage",
-    description: "Premium Ethiopian coffee, spices, and processed goods.",
-  },
+    title: "Commodities",
+    icon: <FiBox />,
+    description: "Bulk trading with transparent pricing"
+  }
 ];
 
 const Home = () => {
@@ -30,102 +35,62 @@ const Home = () => {
         <div className={styles.heroOverlay}></div>
         <img src={heroImage} alt="Global Trade" className={styles.heroImage} />
         <div className={styles.heroContent}>
-          <h1>Global Trade Solutions</h1>
-          <p>Bridging markets with precision and elegance</p>
+          <div className={styles.logoContainer}>
+            {/* Your black & white logo would go here */}
+            <span className={styles.logoText}>ANTSAR</span>
+          </div>
+          <h1>Precision in Global Commerce</h1>
+          <p>Strategic trade solutions between emerging markets</p>
+          <div className={styles.ctaGroup}>
+            <Link to="/services" className={styles.primaryCta}>Our Services</Link>
+            <Link to="/contact" className={styles.secondaryCta}>Get in Touch</Link>
+          </div>
         </div>
       </section>
 
-      {/* What We Do Section */}
-      <section className={styles.whatWeDo}>
+      {/* Services Section */}
+      <section className={styles.services}>
         <div className={styles.container}>
           <div className={styles.sectionHeader}>
-            <h2 className={styles.sectionTitle}>What We Do</h2>
-            <p className={styles.sectionSubtitle}>Comprehensive solutions for your international trade needs</p>
+            <h2>Tailored Trade Solutions</h2>
+            <p className={styles.sectionSubtitle}>Comprehensive services for seamless cross-border commerce</p>
           </div>
           <div className={styles.servicesGrid}>
-            <div className={styles.serviceRow}>
-              <div className={styles.serviceCard}>
-                <div className={styles.serviceIcon}>🌍</div>
-                <h3>Import & Export Brokerage</h3>
-                <p>Connecting buyers and sellers across borders with our global network.</p>
-              </div>
-              <div className={styles.serviceCard}>
-                <div className={styles.serviceIcon}>🔍</div>
-                <h3>Product Sourcing</h3>
-                <p>Finding the best suppliers tailored to your specific requirements.</p>
-              </div>
+            <div className={styles.serviceCard}>
+              <FiGlobe className={styles.serviceIcon} />
+              <h3>Market Entry</h3>
+              <p>Strategic guidance for expanding into new territories</p>
             </div>
-            <div className={styles.serviceRow}>
-              <div className={styles.serviceCard}>
-                <div className={styles.serviceIcon}>🚚</div>
-                <h3>Logistics Support</h3>
-                <p>End-to-end transportation and customs clearance solutions.</p>
-              </div>
-              <div className={styles.serviceCard}>
-                <div className={styles.serviceIcon}>📊</div>
-                <h3>Market Consulting</h3>
-                <p>Strategic insights to guide your international expansion.</p>
-              </div>
+            <div className={styles.serviceCard}>
+              <FiTrendingUp className={styles.serviceIcon} />
+              <h3>Commodity Trading</h3>
+              <p>Reliable sourcing and distribution networks</p>
+            </div>
+            <div className={styles.serviceCard}>
+              <FiShield className={styles.serviceIcon} />
+              <h3>Risk Management</h3>
+              <p>Protecting your interests in volatile markets</p>
+            </div>
+            <div className={styles.serviceCard}>
+              <FiCompass className={styles.serviceIcon} />
+              <h3>Logistics Strategy</h3>
+              <p>Optimized supply chain solutions</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Why Choose Us Section */}
-      <section className={styles.whyChooseUs}>
-        <div className={styles.container}>
-          <div className={styles.sectionHeader}>
-            <h2 className={styles.sectionTitle}>Why Partner With Us</h2>
-            <p className={styles.sectionSubtitle}>We deliver exceptional value through our unique advantages</p>
-          </div>
-
-          <div className={styles.benefitsGrid}>
-            <div className={styles.benefitRow}>
-              <div className={styles.benefitCard}>
-                <div className={styles.benefitIcon}>
-                  <FaGlobe />
-                </div>
-                <h3>Global Network</h3>
-                <p>Established connections across 3 continents with trusted partners.</p>
-              </div>
-              <div className={styles.benefitCard}>
-                <div className={styles.benefitIcon}>
-                  <FaChartLine />
-                </div>
-                <h3>Operational Excellence</h3>
-                <p>30% faster lead times through streamlined processes.</p>
-              </div>
-            </div>
-            <div className={styles.benefitRow}>
-              <div className={styles.benefitCard}>
-                <div className={styles.benefitIcon}>
-                  <FaShieldAlt />
-                </div>
-                <h3>Complete Transparency</h3>
-                <p>Real-time tracking at every stage of your shipment.</p>
-              </div>
-              <div className={styles.benefitCard}>
-                <div className={styles.benefitIcon}>
-                  <FaLanguage />
-                </div>
-                <h3>Cultural Bridge</h3>
-                <p>Multilingual team understanding local business practices.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Featured Industries */}
+      {/* Industries Section */}
       <section className={styles.industries}>
         <div className={styles.container}>
           <div className={styles.sectionHeader}>
-            <h2 className={styles.sectionTitle}>Featured Industries</h2>
-            <p className={styles.sectionSubtitle}>Sectors where we have deep expertise</p>
+            <h2>Industry Specializations</h2>
+            <p className={styles.sectionSubtitle}>Sectors where we deliver exceptional results</p>
           </div>
           <div className={styles.industriesGrid}>
             {industries.map((industry, index) => (
               <div key={index} className={styles.industryCard}>
+                <div className={styles.industryIcon}>{industry.icon}</div>
                 <h3>{industry.title}</h3>
                 <p>{industry.description}</p>
               </div>
