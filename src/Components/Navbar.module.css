@@ -5,6 +5,7 @@
   top: 0;
   z-index: 1000;
   border-bottom: 1px solid var(--gray-2);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .container {
@@ -20,6 +21,42 @@
   display: flex;
   align-items: center;
   gap: var(--space-sm);
+  position: relative;
+  padding-top: 15px; /* space for arrow */
+}
+
+.logoLink {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  position: relative;
+  padding-bottom: 8px; /* space for underline */
+}
+
+.logoLink::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70px;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, #d4af37, transparent);
+  border-radius: 2px;
+}
+
+.logoLink::before {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 10px;
+  height: 10px;
+  border-bottom: 3px solid #d4af37;
+  border-right: 3px solid #d4af37;
+  background: transparent;
+  border-radius: 0;
 }
 
 .logo {
@@ -50,15 +87,16 @@
   text-transform: uppercase;
   position: relative;
   padding: var(--space-sm) 0;
-  transition: color 0.3s ease;
+  transition: color 0.3s ease, transform 0.2s ease;
 }
 
 .navLink:hover {
-  color: var(--black);
+  color: #d4af37; /* Gold on hover */
+  transform: translateY(-1px);
 }
 
 .navLink.active {
-  color: var(--black);
+  color: #d4af37; /* Gold for active link */
 }
 
 .navLink.active::after {
@@ -68,7 +106,8 @@
   left: 0;
   width: 100%;
   height: 2px;
-  background: var(--black);
+  background: #d4af37; /* Gold underline */
+  box-shadow: 0 0 6px rgba(212, 175, 55, 0.6);
 }
 
 .mobileMenuButton {
@@ -79,6 +118,11 @@
   font-size: 1.5rem;
   cursor: pointer;
   z-index: 1001;
+  transition: color 0.3s ease;
+}
+
+.mobileMenuButton:hover {
+  color: #d4af37;
 }
 
 .mobileMenu {
@@ -110,11 +154,12 @@
   color: var(--black);
   text-transform: uppercase;
   letter-spacing: 1px;
-  transition: color 0.3s ease;
+  transition: color 0.3s ease, transform 0.2s ease;
 }
 
 .mobileNavLink:hover {
-  color: var(--gray-3);
+  color: #d4af37;
+  transform: translateY(-2px);
 }
 
 @media (max-width: 768px) {

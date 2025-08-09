@@ -1,6 +1,7 @@
-/* Elegant Footer Styling */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap');
+/* Elegant Golden Footer Styling */
 .footer {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Playfair', sans-serif;
   color: #333;
   background: #fff;
   border-top: 1px solid rgba(0, 0, 0, 0.05);
@@ -8,7 +9,7 @@
 
 .footerTop {
   padding: 4rem 0;
-  background: #f9fafb;
+  background: #fdfaf4; /* Subtle warm off-white */
 }
 
 .container {
@@ -35,19 +36,19 @@
 
 .logoIcon {
   font-size: 1.8rem;
-  color: #5e35b1; /* Deep purple accent */
+  color: #c89b3c; /* Rich gold accent */
   margin-right: 0.75rem;
 }
 
 .logoText {
   font-size: 1.6rem;
   font-weight: 700;
-  color: #1a237e; /* Dark blue */
+  color: #b3842e; /* Deep golden brown */
   letter-spacing: 0.5px;
 }
 
 .companyDescription {
-  color: #546e7a;
+  color: #6e5a36;
   line-height: 1.6;
   margin-bottom: 1.5rem;
   font-size: 0.95rem;
@@ -59,10 +60,10 @@
 }
 
 .socialLinks a {
-  color: #5e35b1;
+  color: #c89b3c;
   font-size: 1.1rem;
   transition: all 0.3s ease;
-  background: rgba(94, 53, 177, 0.1);
+  background: rgba(200, 155, 60, 0.1);
   width: 36px;
   height: 36px;
   border-radius: 50%;
@@ -73,7 +74,7 @@
 
 .socialLinks a:hover {
   color: white;
-  background: #5e35b1;
+  background: #c89b3c;
   transform: translateY(-2px);
 }
 
@@ -81,7 +82,7 @@
   font-size: 1.1rem;
   font-weight: 600;
   margin-bottom: 1.5rem;
-  color: #1a237e;
+  color: #b3842e;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
@@ -95,14 +96,14 @@
 }
 
 .footerLinks a {
-  color: #546e7a;
+  color: #6e5a36;
   transition: all 0.3s ease;
   font-size: 0.95rem;
   display: inline-block;
 }
 
 .footerLinks a:hover {
-  color: #5e35b1;
+  color: #c89b3c;
   transform: translateX(3px);
 }
 
@@ -114,13 +115,13 @@
   display: flex;
   align-items: flex-start;
   margin-bottom: 1rem;
-  color: #546e7a;
+  color: #6e5a36;
   font-size: 0.95rem;
   line-height: 1.6;
 }
 
 .contactIcon {
-  color: #5e35b1;
+  color: #c89b3c;
   margin-right: 0.8rem;
   margin-top: 0.2rem;
   flex-shrink: 0;
@@ -128,12 +129,12 @@
 }
 
 .contactInfo a {
-  color: #546e7a;
+  color: #6e5a36;
   transition: all 0.3s ease;
 }
 
 .contactInfo a:hover {
-  color: #5e35b1;
+  color: #c89b3c;
 }
 
 .footerBottom {
@@ -149,7 +150,7 @@
 }
 
 .footerBottom p {
-  color: #78909c;
+  color: #8b7b57;
   font-size: 0.85rem;
   margin: 0;
 }
@@ -161,17 +162,17 @@
 }
 
 .legalLinks a {
-  color: #78909c;
+  color: #8b7b57;
   font-size: 0.85rem;
   transition: all 0.3s ease;
 }
 
 .legalLinks a:hover {
-  color: #5e35b1;
+  color: #c89b3c;
 }
 
 .legalLinks span {
-  color: #cfd8dc;
+  color: #d8c8a1;
 }
 
 /* Responsive Design */
