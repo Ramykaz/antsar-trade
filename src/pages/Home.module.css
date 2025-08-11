@@ -1,4 +1,6 @@
-/* Reuse your root variables from home */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Montserrat:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&display=swap');
 
 :root {
   --black: #111;
@@ -9,24 +11,19 @@
   --bg-light: #fafafa;
 }
 
-/* Base styles consistent with Home */
-
-.about, .servicesPage {
-  font-family: 'Montserrat', sans-serif;
+.home {
+  font-family: 'Playfair', sans-serif;
   color: var(--black);
-  background: var(--white);
   overflow-x: hidden;
 }
 
-/* Hero Sections */
+/* HERO */
 .hero {
   position: relative;
-  height: 60vh; /* or 90vh for About hero if you want */
+  height: 90vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  text-align: center;
-  overflow: hidden;
 }
 
 .heroImage {
@@ -36,208 +33,155 @@
   height: 100%;
   object-fit: cover;
   filter: brightness(0.95);
-  z-index: 1;
 }
 
 .heroOverlay {
   position: absolute;
   inset: 0;
   background: linear-gradient(to bottom, rgba(17,17,17,0.3), rgba(17,17,17,0.9));
-  z-index: 2;
 }
 
 .heroContent {
   position: relative;
-  z-index: 3;
+  text-align: center;
   color: var(--white);
-  max-width: 800px;
-  padding: 0 2rem;
-  font-family: 'Playfair Display', serif;
+  padding: 0 1rem;
   animation: fadeUp 1.3s ease forwards;
 }
 
-.heroContent h1 {
+.logo {
+  font-family: 'Cinzel', serif;
   font-size: 3.5rem;
   font-weight: 700;
-  margin-bottom: 1rem;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+  letter-spacing: 2px;
 }
 
-.heroContent p {
-  font-size: 1.4rem;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-}
-
-/* Section Headers - dark black titles with gold underline */
-.sectionTitle, .sectionTitleGold {
-  font-family: 'Playfair Display', serif;
-  font-size: 2.2rem;
-  font-weight: 700;
-  color: var(--black); /* dark black text */
-  margin-bottom: 1rem;
-  position: relative;
-  display: inline-block;
-  padding-bottom: 6px;
-}
-
-.sectionTitle::after, .sectionTitleGold::after {
-  content: '';
-  position: absolute;
-  bottom: -12px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 60px;
-  height: 3px;
-  background: var(--gold);
-  box-shadow: 0 0 8px rgba(212, 175, 55, 0.7);
-  border-radius: 2px;
-}
-
-/* Section subtitles */
-.sectionSubtitle, .sectionSubtitleGold {
-  font-size: 1.2rem;
-  color: var(--gray);
-  max-width: 700px;
-  margin: 0 auto 2rem;
+.logo span {
+  display: block;
+  font-size: 1.5rem;
   font-weight: 400;
-  letter-spacing: 0.3px;
+  color: var(-gold);
 }
 
-/* Section backgrounds */
-.sectionLight, .servicesPage, .about {
+.tagline {
+  font-size: 1.3rem;
+  font-weight: 300;
+  margin-top: 1rem;
+  color: var(--gold);
+}
+
+.ctaGroup {
+  margin-top: 2rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.primaryCta, .secondaryCta {
+  padding: 0.9rem 2rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  font-size: 0.95rem;
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+
+.primaryCta {
+  background: var(--gold);
+  color: var(--black);
+}
+
+.primaryCta:hover {
+  background: var(--dark-gold);
+}
+
+.secondaryCta {
+  background: transparent;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+}
+
+.secondaryCta:hover {
+  background: var(--gold);
+  color: var(--black);
+}
+
+/* SECTIONS */
+.section {
   padding: 5rem 2rem;
   background: var(--white);
 }
 
-/* Content text */
-.contentText p, .card p, .serviceCardGold p {
-  font-size: 1rem;
-  color: var(--gray);
-  line-height: 1.6;
-  font-weight: 400;
+.altSection {
+  background: var(--bg-light);
 }
 
-/* Cards - white bg with subtle shadows, black/dark text */
-.card, .serviceCardGold {
-  background: var(--white);
-  padding: 2rem 1.5rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
-  border: 1px solid rgba(212, 175, 55, 0.3);
+.sectionHeader {
   text-align: center;
+  margin-bottom: 3rem;
+}
+
+.sectionHeader h2 {
+  font-family: 'Playfair', serif;
+  font-size: 2.2rem;
+  margin-bottom: 0.5rem;
+  position: relative;
+}
+
+.sectionHeader h2::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: var(--gold);
+  margin: 0.5rem auto 0;
+}
+
+.sectionHeader p {
+  color: var(--gray);
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+/* GRID CARDS */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
+  gap: 2rem;
+}
+
+.card {
+  background: var(--white);
+  padding: 2rem;
+  text-align: center;
+  border-radius: 6px;
   transition: all 0.3s ease;
-  cursor: default;
+  box-shadow: 0 2px 15px rgba(0,0,0,0.05);
 }
 
-.card:hover, .serviceCardGold:hover {
-  box-shadow: 0 5px 25px rgba(212, 175, 55, 0.15);
+.card:hover {
   transform: translateY(-5px);
-  border-color: var(--gold);
+  box-shadow: 0 5px 25px rgba(0,0,0,0.15);
 }
 
-/* Card titles */
-.card h3, .serviceCardGold h3 {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.4rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-  color: var(--black);
-}
-
-/* Icons in gold */
-.cardIcon, .iconContainerGold {
-  font-size: 2.5rem;
+.iconWrapper {
+  font-size: 2rem;
   color: var(--gold);
   margin-bottom: 1rem;
 }
 
-/* Industry Photos with dark overlay and white text */
-.industryCardPhoto {
-  position: relative;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
-  cursor: pointer;
-  transition: transform 0.3s ease;
-  height: 320px;
-  display: flex !important;
-  align-items: center;
-  justify-content: center;
+.card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.7rem;
+  font-weight: 600;
 }
 
-.industryCardPhoto:hover {
-  transform: scale(1.05);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+.card p {
+  font-size: 0.95rem;
+  color: var(--gray);
 }
 
-.industryPhoto {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: brightness(0.45) saturate(1.2);
-  transition: filter 0.3s ease;
-}
-
-.industryCardPhoto:hover .industryPhoto {
-  filter: brightness(0.6) saturate(1.3);
-}
-
-.industryPhotoOverlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(0,0,0,0.7) 20%, rgba(0,0,0,0.9) 90%);
-  z-index: 1;
-  transition: background 0.3s ease;
-}
-
-.industryTextOnPhoto {
-  position: absolute;
-  z-index: 2;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: var(--white);
-  max-width: 90%;
-  text-align: center;
-}
-
-.industryTextOnPhoto h3 {
-  font-family: 'Playfair Display', serif;
-  font-size: 2rem;
-  margin-bottom: 1rem;
-  text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.7);
-  font-weight: 700;
-}
-
-.industryTextOnPhoto ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.industryTextOnPhoto ul li {
-  font-size: 1rem;
-  line-height: 1.4;
-  text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.7);
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .heroContent h1 {
-    font-size: 2.5rem;
-  }
-  .heroContent p {
-    font-size: 1.1rem;
-  }
-  .sectionTitle, .sectionTitleGold {
-    font-size: 2rem;
-  }
-  .servicesGrid {
-    flex-direction: column;
-  }
-}
-
-/* Animation */
+/* ANIMATION */
 @keyframes fadeUp {
   from { transform: translateY(20px); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }

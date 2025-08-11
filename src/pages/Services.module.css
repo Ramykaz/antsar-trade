@@ -1,81 +1,79 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Playfair+Display&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Montserrat:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&display=swap');
 
-/* ===== Base Styles ===== */
+:root {
+  --black: #111;
+  --gold: #d4af37;
+  --dark-gold: #b89628;
+  --white: #fff;
+  --gray: #8a8a8a;
+  --bg-light: #fafafa;
+}
+
+/* PAGE WRAPPER */
 .servicesPage {
   font-family: 'Montserrat', sans-serif;
-  color: #333;
+  color: var(--black);
+  overflow-x: hidden;
 }
 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem;
-}
-
-/* ===== Hero Section ===== */
+/* HERO */
 .hero {
   position: relative;
-  height: 60vh;
+  height: 80vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  text-align: center;
-  overflow: hidden;
 }
 
 .heroImage {
   position: absolute;
-  top: 0;
-  left: 0;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: grayscale(30%) contrast(110%);
-  z-index: 1;
+  filter: brightness(0.9);
 }
 
 .heroOverlay {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 2;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(17,17,17,0.3), rgba(17,17,17,0.9));
 }
 
 .heroContent {
   position: relative;
-  z-index: 3;
-  color: white;
-  max-width: 800px;
-  padding: 0 2rem;
+  text-align: center;
+  color: var(--white);
+  animation: fadeUp 1.3s ease forwards;
 }
 
 .heroContent h1 {
-  font-family: 'Playfair Display', serif;
-  font-size: 3.5rem;
-  font-weight: 600;
+  font-family: 'Cinzel', serif;
+  font-size: 3rem;
   margin-bottom: 1rem;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .heroContent p {
-  font-size: 1.4rem;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  font-size: 1.2rem;
+  color: var(--gold);
 }
 
-/* ===== Section Styles ===== */
+/* SECTION BASE */
 .sectionLight {
-  padding: 5rem 0;
-  background-color: #ffffff;
+  background: var(--white);
+  padding: 5rem 2rem;
 }
 
 .sectionDark {
-  padding: 5rem 0;
-  background-color: #f8fafc;
-  border-top: 1px solid #e2e8f0;
-  border-bottom: 1px solid #e2e8f0;
+  background: var(--bg-light);
+  padding: 5rem 2rem;
+}
+
+.container {
+  max-width: 1200px;
+  margin: auto;
 }
 
 .sectionHeader {
@@ -85,170 +83,187 @@
 
 .sectionTitle {
   font-family: 'Playfair Display', serif;
-  font-size: 2.5rem;
-  font-weight: 600;
-  color: #1a365d;
-  margin-bottom: 1rem;
+  font-size: 2.2rem;
+  margin-bottom: 0.5rem;
   position: relative;
 }
 
 .sectionTitle::after {
   content: '';
-  position: absolute;
-  bottom: -15px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80px;
+  display: block;
+  width: 60px;
   height: 3px;
-  background: #2b6cb0;
+  background: var(--gold);
+  margin: 0.5rem auto 0;
 }
 
 .sectionSubtitle {
-  font-size: 1.2rem;
-  color: #4a5568;
-  max-width: 700px;
+  color: var(--gray);
+  max-width: 650px;
   margin: 0 auto;
+  font-weight: 400;
 }
 
-/* ===== Services Slider ===== */
+/* SERVICES SLIDER */
 .servicesSlider {
-  margin-top: 3rem;
+  margin-top: 2rem;
 }
 
+/* Individual Service Cards */
 .serviceCard {
-  background: white;
-  padding: 2.5rem 2rem;
-  border-radius: 8px;
-  position: relative;
-  overflow: hidden;
-  z-index: 1;
-  transition: all 0.4s ease;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-  border: 1px solid #e2e8f0;
+  background: var(--white);
+  padding: 2rem;
   text-align: center;
-  min-height: 320px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+  min-height: 280px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: center;
 }
 
 .serviceCard:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+  transform: translateY(-5px);
+  box-shadow: 0 5px 25px rgba(0,0,0,0.15);
 }
 
 .iconContainer {
-  font-size: 3rem;
-  color: #2b6cb0;
-  margin-bottom: 1.5rem;
+  font-size: 2.5rem;
+  color: var(--gold);
+  margin-bottom: 1.2rem;
 }
 
 .serviceCard h3 {
+  font-size: 1.3rem;
+  margin-bottom: 0.8rem;
+  font-weight: 600;
   font-family: 'Playfair Display', serif;
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-  color: #1a365d;
+  color: var(--black);
 }
 
 .serviceCard p {
-  color: #4a5568;
-  line-height: 1.6;
   font-size: 1rem;
+  color: var(--gray);
   flex-grow: 1;
 }
 
-/* ===== Industries Grid - 2 column on desktop ===== */
-.industriesGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-  gap: 2rem;
-  margin-top: 3rem;
+/* INDUSTRY SLIDER */
+.industriesSlider {
+  margin-top: 2rem;
+  /* Slick slider arrows override */
 }
 
-.industryCard {
-  background: white;
-  padding: 2.5rem 2rem;
-  border-radius: 8px;
-  transition: all 0.4s ease;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-  border: 1px solid #e2e8f0;
-  text-align: center;
-  min-height: 300px;
+.industrySlide {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+  transition: box-shadow 0.3s ease;
 }
 
-.industryCard:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+.industrySlide:hover {
+  box-shadow: 0 6px 30px rgba(0,0,0,0.2);
+  transform: scale(1.02);
+  transition: all 0.3s ease;
+}
+
+.industryImageWrapper {
+  position: relative;
+  width: 100%;
+  height: 280px;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.industryImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.75);
+  transition: filter 0.3s ease;
+  border-radius: 10px;
+}
+
+.industrySlide:hover .industryImage {
+  filter: brightness(0.55);
+}
+
+.industryOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.6), transparent 70%);
+  border-radius: 10px;
+  pointer-events: none;
+}
+
+.industryText {
+  position: absolute;
+  bottom: 1.2rem;
+  left: 1.5rem;
+  color: var(--white);
+  z-index: 2;
+  max-width: 80%;
+  text-shadow: 0 0 8px rgba(0,0,0,0.9);
 }
 
 .industryIconContainer {
-  font-size: 3rem;
-  color: #2b6cb0;
-  margin-bottom: 1.5rem;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: var(--gold);
 }
 
-.industryCard h3 {
+.industryText h3 {
   font-family: 'Playfair Display', serif;
   font-size: 1.5rem;
-  margin-bottom: 1.5rem;
-  color: #1a365d;
+  margin-bottom: 0.3rem;
 }
 
-.industryList {
-  list-style: none;
-  text-align: left;
-  padding-left: 1.5rem;
-  max-width: 320px;
-  margin: 0 auto;
+.industryText p {
+  font-size: 1rem;
+  font-weight: 300;
 }
 
-.industryList li {
-  position: relative;
-  margin-bottom: 0.8rem;
-  color: #4a5568;
-  font-size: 0.95rem;
-}
-
-.bullet {
-  position: absolute;
-  left: -1.5rem;
-  top: 0.6rem;
-  width: 8px;
-  height: 8px;
-  background: #2b6cb0;
-  border-radius: 50%;
-}
-
-/* ===== Responsive Design ===== */
-@media (max-width: 1024px) {
-  .servicesSlider .slick-slide {
-    padding: 0 10px;
+/* ANIMATIONS */
+@keyframes fadeUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
   }
 }
 
+/* SLICK DOTS AND ARROWS */
+.slick-dots li button:before {
+  color: var(--gold);
+}
+
+.slick-prev:before,
+.slick-next:before {
+  color: var(--gold);
+}
+
+/* Responsive tweaks */
 @media (max-width: 768px) {
+  .serviceCard {
+    min-height: auto;
+  }
+
+  .industryImageWrapper {
+    height: 220px;
+  }
+}
+
+@media (max-width: 480px) {
   .heroContent h1 {
-    font-size: 2.5rem;
+    font-size: 2.2rem;
   }
 
-  .heroContent p {
-    font-size: 1.1rem;
-  }
-
-  .sectionTitle {
-    font-size: 2rem;
-  }
-
-  .servicesSlider {
-    margin-top: 2rem;
-  }
-
-  .servicesSlider .slick-slide {
-    padding: 0 5px;
-  }
-
-  .industriesGrid {
-    grid-template-columns: 1fr;
+  .industryImageWrapper {
+    height: 180px;
   }
 }
