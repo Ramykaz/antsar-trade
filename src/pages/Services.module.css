@@ -11,17 +11,18 @@
   --bg-light: #fafafa;
 }
 
-/* PAGE WRAPPER */
+/* Global resets and font */
 .servicesPage {
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Playfair Display', serif;
   color: var(--black);
   overflow-x: hidden;
+  background-color: var(--white);
 }
 
 /* HERO */
 .hero {
   position: relative;
-  height: 80vh;
+  height: 90vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -33,49 +34,54 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: brightness(0.9);
+  filter: brightness(0.95);
 }
 
 .heroOverlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, rgba(17,17,17,0.3), rgba(17,17,17,0.9));
+  background: linear-gradient(to bottom, rgba(17, 17, 17, 0.3), rgba(17, 17, 17, 0.9));
 }
 
 .heroContent {
   position: relative;
   text-align: center;
   color: var(--white);
+  padding: 0 1rem;
   animation: fadeUp 1.3s ease forwards;
 }
 
 .heroContent h1 {
   font-family: 'Cinzel', serif;
-  font-size: 3rem;
-  margin-bottom: 1rem;
+  font-size: 3.5rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  margin-bottom: 0.5rem;
 }
 
 .heroContent p {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
+  font-weight: 300;
   color: var(--gold);
 }
 
-/* SECTION BASE */
+/* SECTIONS */
 .sectionLight {
-  background: var(--white);
   padding: 5rem 2rem;
+  background: var(--white);
 }
 
 .sectionDark {
-  background: var(--bg-light);
   padding: 5rem 2rem;
+  background: var(--bg-light);
 }
 
 .container {
   max-width: 1200px;
-  margin: auto;
+  margin: 0 auto;
 }
 
+/* Section Header */
 .sectionHeader {
   text-align: center;
   margin-bottom: 3rem;
@@ -83,7 +89,7 @@
 
 .sectionTitle {
   font-family: 'Playfair Display', serif;
-  font-size: 2.2rem;
+  font-size: 2.4rem;
   margin-bottom: 0.5rem;
   position: relative;
 }
@@ -102,130 +108,190 @@
   max-width: 650px;
   margin: 0 auto;
   font-weight: 400;
+  font-size: 1.1rem;
 }
 
-/* SERVICES SLIDER */
-.servicesSlider {
+/* ----------- CORE SERVICES FLIP CARDS ------------ */
+
+.servicesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2.5rem;
   margin-top: 2rem;
+  perspective: 1200px; /* Needed for 3D flip effect */
 }
 
-/* Individual Service Cards */
-.serviceCard {
-  background: var(--white);
-  padding: 2rem;
+.flipCard {
+  background-color: transparent;
+  width: 100%;
+  height: 350px;
+  perspective: 1200px;
+  cursor: pointer;
+}
+
+.flipCardInner {
+  position: relative;
+  width: 100%;
+  height: 100%;
   text-align: center;
-  border-radius: 6px;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 15px rgba(0,0,0,0.05);
-  min-height: 280px;
+  transition: transform 0.8s ease;
+  transform-style: preserve-3d;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.07);
+  border-radius: 12px;
+}
+
+.flipCard:hover .flipCardInner {
+  transform: rotateY(180deg);
+}
+
+/* Front side */
+.flipCardFront {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  border-radius: 12px;
+  backface-visibility: hidden;
+}
+
+/* Back side */
+.flipCardBack {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: var(--black);
+  color: var(--white);
+  border-radius: 12px;
+  padding: 2rem 1.5rem;
+  backface-visibility: hidden;
+  transform: rotateY(180deg);
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
 }
 
-.serviceCard:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 5px 25px rgba(0,0,0,0.15);
-}
-
-.iconContainer {
-  font-size: 2.5rem;
-  color: var(--gold);
-  margin-bottom: 1.2rem;
-}
-
-.serviceCard h3 {
-  font-size: 1.3rem;
-  margin-bottom: 0.8rem;
-  font-weight: 600;
+.flipCardBack h3 {
   font-family: 'Playfair Display', serif;
-  color: var(--black);
+  font-size: 1.8rem;
+  margin: 1rem 0 0.5rem;
 }
 
-.serviceCard p {
+.flipCardBack p {
+  font-weight: 300;
   font-size: 1rem;
-  color: var(--gray);
-  flex-grow: 1;
+  line-height: 1.4;
 }
 
-/* INDUSTRY SLIDER */
+/* Icon inside flip card back */
+.iconContainer {
+  font-size: 3rem;
+  color: var(--gold);
+}
+
+/* ----------- INDUSTRY EXPERTISE SLIDER ------------ */
+
 .industriesSlider {
   margin-top: 2rem;
-  /* Slick slider arrows override */
 }
 
 .industrySlide {
+  padding: 1rem;
   position: relative;
-  border-radius: 10px;
-  overflow: hidden;
-  cursor: pointer;
-  box-shadow: 0 2px 15px rgba(0,0,0,0.08);
-  transition: box-shadow 0.3s ease;
-}
-
-.industrySlide:hover {
-  box-shadow: 0 6px 30px rgba(0,0,0,0.2);
-  transform: scale(1.02);
-  transition: all 0.3s ease;
-}
-
-.industryImageWrapper {
-  position: relative;
-  width: 100%;
-  height: 280px;
-  overflow: hidden;
-  border-radius: 10px;
 }
 
 .industryImage {
+  position: relative;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: brightness(0.75);
-  transition: filter 0.3s ease;
-  border-radius: 10px;
+  height: 400px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 3px 18px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.3s ease;
 }
 
-.industrySlide:hover .industryImage {
-  filter: brightness(0.55);
+.industryImage:hover {
+  transform: scale(1.05);
 }
 
 .industryOverlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.6), transparent 70%);
-  border-radius: 10px;
-  pointer-events: none;
+  background: linear-gradient(to top, rgba(17, 17, 17, 0.75), transparent 70%);
+  border-radius: 16px;
+  z-index: 1;
 }
 
-.industryText {
+.industryContent {
   position: absolute;
   bottom: 1.2rem;
   left: 1.5rem;
-  color: var(--white);
+  right: 1.5rem;
   z-index: 2;
-  max-width: 80%;
-  text-shadow: 0 0 8px rgba(0,0,0,0.9);
+  color: var(--white);
+  text-shadow: 0 0 8px rgba(0, 0, 0, 0.8);
 }
 
 .industryIconContainer {
-  font-size: 2rem;
+  font-size: 2.5rem;
   margin-bottom: 0.5rem;
   color: var(--gold);
 }
 
-.industryText h3 {
+.industryContent h3 {
   font-family: 'Playfair Display', serif;
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   margin-bottom: 0.3rem;
 }
 
-.industryText p {
-  font-size: 1rem;
+.industryList {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
   font-weight: 300;
+  font-size: 1rem;
+  max-height: 6rem;
+  overflow-y: auto;
+  color: var(--white);
 }
 
-/* ANIMATIONS */
+.industryList li {
+  position: relative;
+  padding-left: 15px;
+  margin-bottom: 0.25rem;
+}
+
+.bullet {
+  position: absolute;
+  left: 0;
+  top: 7px;
+  width: 8px;
+  height: 8px;
+  background-color: var(--gold);
+  border-radius: 50%;
+}
+
+/* ----------- SCROLLBAR STYLING FOR INDUSTRY LIST ------------ */
+.industryList::-webkit-scrollbar {
+  width: 6px;
+}
+
+.industryList::-webkit-scrollbar-thumb {
+  background-color: var(--gold);
+  border-radius: 3px;
+}
+
+.industryList::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* ----------- ANIMATIONS ------------ */
+
 @keyframes fadeUp {
   from {
     transform: translateY(20px);
@@ -234,36 +300,5 @@
   to {
     transform: translateY(0);
     opacity: 1;
-  }
-}
-
-/* SLICK DOTS AND ARROWS */
-.slick-dots li button:before {
-  color: var(--gold);
-}
-
-.slick-prev:before,
-.slick-next:before {
-  color: var(--gold);
-}
-
-/* Responsive tweaks */
-@media (max-width: 768px) {
-  .serviceCard {
-    min-height: auto;
-  }
-
-  .industryImageWrapper {
-    height: 220px;
-  }
-}
-
-@media (max-width: 480px) {
-  .heroContent h1 {
-    font-size: 2.2rem;
-  }
-
-  .industryImageWrapper {
-    height: 180px;
   }
 }
