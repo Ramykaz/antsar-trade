@@ -1,27 +1,103 @@
-import React, { useRef, useState } from 'react';
-import { FaWhatsapp, FaEnvelope, FaPhone, FaMapMarkerAlt, FaPaperPlane, FaClock, FaLinkedin } from 'react-icons/fa';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import {
+  FaWhatsapp,
+  FaEnvelope,
+  FaPhone,
+  FaPaperPlane,
+  FaClock,
+  FaLinkedin
+} from 'react-icons/fa';
 import { MdBusiness } from 'react-icons/md';
 import styles from './Contact.module.css';
 
-const Contact = () => {
+// If you have a hero image in your assets folder, keep this import.
+// Replace the file name to match your asset. If you don't have it yet,
+// you can comment this out and the hero will still render its gradient.
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+// @ts-ignore
+import contactHero from '../assets/contact-hero.jpg';
+
+/**
+ * CONTACT PAGE
+ *  - Matches homepage gold/black style
+ *  - Uses your exact company details and channels
+ *  - No office / map sections (removed)
+ *  - Primary WhatsApp number updated to +905056780600
+ *  - Includes floating WhatsApp button and a form-side WhatsApp action
+ */
+
+// --- Constants (single source of truth) ---
+const COMPANY_NAME = 'ANTSAR International Trade';
+const COMPANY_ROLE = 'Import/Export Specialists';
+
+const EMAIL = 'antsartrade@gmail.com';
+const PHONE_E164 = '+905056780600';       // tel: format
+const PHONE_DISPLAY = '+905056780600';    // shown to users as provided
+
+// WhatsApp :: wa.me without "+" and with optional prefilled text
+const WA_NUMBER = '905056780600';
+const WA_BASE_URL = `https://wa.me/${WA_NUMBER}`;
+
+type FormState = {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+};
+
+const Contact: React.FC = () => {
   const formRef = useRef<HTMLFormElement>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormState>({
     name: '',
     email: '',
     subject: '',
-    message: ''
+    message: '',
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  // Build a friendly WhatsApp message dynamically from form fields
+  const waPrefill = useMemo(() => {
+    const lines = [
+      `Hello ANTSAR Team,`,
+      formData.name ? `My name: ${formData.name}` : '',
+      formData.subject ? `Subject: ${formData.subject}` : '',
+      formData.message ? `Message: ${formData.message}` : '',
+      formData.email ? `Reply to: ${formData.email}` : '',
+    ]
+      .filter(Boolean)
+      .join('\n');
+
+    const encoded = encodeURIComponent(lines || 'Hello ANTSAR Team, I need information about your services.');
+    return `${WA_BASE_URL}?text=${encoded}`;
+  }, [formData.name, formData.subject, formData.message, formData.email]);
+
+  // Success toast auto-hide
+  useEffect(() => {
+    if (!submitSuccess) return;
+    const t = setTimeout(() => setSubmitSuccess(false), 4000);
+    return () => clearTimeout(t);
+  }, [submitSuccess]);
+
+  // Field change handler
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
+  // Optional: Ctrl/Cmd+Enter to submit
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+      formRef.current?.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+    }
+  };
+
+  // Submit (simulate) — keep your logic, just polish UX
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -35,30 +111,93 @@ const Contact = () => {
         name: '',
         email: '',
         subject: '',
-        message: ''
+        message: '',
       });
     }, 1500);
   };
 
+  // Direct WhatsApp open from a dedicated button
+  const handleWhatsAppClick = () => {
+    window.open(waPrefill, '_blank', 'noopener,noreferrer');
+  };
+
   return (
     <div className={styles.contactPage}>
-      {/* Hero Section */}
-      <section className={styles.hero}>
+      {/* =======================
+          HERO (image + gold overlay)
+      ======================== */}
+      <section className={styles.hero} aria-label="Contact hero">
+        {/* Optional hero image (from assets). Remove if you prefer pure CSS bg. */}
+        <img
+          src={contactHero}
+          alt=""
+          className={styles.heroImage}
+          loading="eager"
+          decoding="async"
+        />
+        <div className={styles.heroOverlay} aria-hidden />
+
         <div className={styles.heroContent}>
           <h1>Connect With Us</h1>
-          <p>Our team is ready to assist with your international trade inquiries and partnerships</p>
+          <p>
+            Our team is ready to assist with your international trade inquiries and partnerships.
+            Reach us via email, phone, or WhatsApp — whichever you prefer.
+          </p>
+
+          {/* Quick links row */}
+          <div className={styles.quickLinks} role="group" aria-label="Quick contact links">
+            <a
+              className={styles.quickLink}
+              href={`mailto:${EMAIL}`}
+              aria-label="Email us"
+            >
+              <FaEnvelope />
+              <span>{EMAIL}</span>
+            </a>
+            <a
+              className={styles.quickLink}
+              href={`tel:${PHONE_E164}`}
+              aria-label="Call us"
+            >
+              <FaPhone />
+              <span>{PHONE_DISPLAY}</span>
+            </a>
+            <a
+              className={styles.quickLink}
+              href={waPrefill}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Chat via WhatsApp"
+            >
+              <FaWhatsapp />
+              <span>WhatsApp Us</span>
+            </a>
+          </div>
         </div>
       </section>
 
-      {/* Contact Content */}
+      {/* =======================
+          CONTACT CONTENT
+      ======================== */}
       <section className={styles.contactContent}>
         <div className={styles.container}>
-          {/* Contact Form */}
+          {/* ---- Form Column ---- */}
           <div className={styles.formSection}>
-            <h2>Send Us a Message</h2>
-            <p className={styles.formSubtitle}>We typically respond within 1 business day</p>
+            <h2 className={styles.sectionTitle}>
+              Send Us a Message
+            </h2>
+            <p className={styles.formSubtitle}>
+              We typically respond within 1 business day.
+              For urgent matters, ping us on WhatsApp.
+            </p>
 
-            <form ref={formRef} onSubmit={handleSubmit} className={styles.contactForm}>
+            <form
+              ref={formRef}
+              onSubmit={handleSubmit}
+              className={styles.contactForm}
+              aria-describedby="contact-help"
+            >
+              {/* Name */}
               <div className={styles.formGroup}>
                 <label htmlFor="name">Your Name*</label>
                 <input
@@ -69,9 +208,11 @@ const Contact = () => {
                   onChange={handleChange}
                   required
                   placeholder="John Doe"
+                  autoComplete="name"
                 />
               </div>
 
+              {/* Email */}
               <div className={styles.formGroup}>
                 <label htmlFor="email">Email*</label>
                 <input
@@ -82,9 +223,11 @@ const Contact = () => {
                   onChange={handleChange}
                   required
                   placeholder="john@company.com"
+                  autoComplete="email"
                 />
               </div>
 
+              {/* Subject */}
               <div className={styles.formGroup}>
                 <label htmlFor="subject">Subject</label>
                 <input
@@ -94,9 +237,11 @@ const Contact = () => {
                   value={formData.subject}
                   onChange={handleChange}
                   placeholder="Regarding import/export"
+                  autoComplete="off"
                 />
               </div>
 
+              {/* Message */}
               <div className={styles.formGroup}>
                 <label htmlFor="message">Message*</label>
                 <textarea
@@ -104,77 +249,111 @@ const Contact = () => {
                   name="message"
                   value={formData.message}
                   onChange={handleChange}
-                  rows={5}
+                  onKeyDown={handleKeyDown}
+                  rows={6}
                   required
                   placeholder="How can we assist you with your international trade needs?"
-                ></textarea>
+                />
               </div>
 
-              <button
-                type="submit"
-                className={styles.submitButton}
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? (
-                  'Sending...'
-                ) : (
-                  <>
-                    <FaPaperPlane /> Send Message
-                  </>
-                )}
-              </button>
+              {/* Actions */}
+              <div className={styles.formActions}>
+                <button
+                  type="submit"
+                  className={styles.submitButton}
+                  disabled={isSubmitting}
+                  aria-live="polite"
+                >
+                  {isSubmitting ? 'Sending…' : (
+                    <>
+                      <FaPaperPlane /> Send Message
+                    </>
+                  )}
+                </button>
 
+                <button
+                  type="button"
+                  className={styles.whatsappCTA}
+                  onClick={handleWhatsAppClick}
+                  aria-label="Open WhatsApp chat"
+                >
+                  <FaWhatsapp /> WhatsApp Us
+                </button>
+              </div>
+
+              <p id="contact-help" className={styles.helperText}>
+                Tip: Press <kbd>Ctrl</kbd>/<kbd>⌘</kbd> + <kbd>Enter</kbd> to send quickly.
+              </p>
+
+              {/* Success feedback (auto hides) */}
               {submitSuccess && (
-                <div className={styles.successMessage}>
+                <div className={styles.successMessage} role="status" aria-live="polite">
                   <div className={styles.successIcon}>✓</div>
                   <div>
                     <h4>Message sent successfully!</h4>
-                    <p>We'll respond within 24 hours. For urgent matters, please call or WhatsApp us.</p>
+                    <p>
+                      We’ll respond within 24 hours. For urgent matters,
+                      you can also reach us on WhatsApp.
+                    </p>
+                    <a
+                      className={styles.successWhatsApp}
+                      href={waPrefill}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <FaWhatsapp /> Continue on WhatsApp
+                    </a>
                   </div>
                 </div>
               )}
             </form>
           </div>
 
-          {/* Contact Info */}
+          {/* ---- Info Column ---- */}
           <div className={styles.infoSection}>
-            <h2>Our Contact Details</h2>
-            <p className={styles.infoSubtitle}>Multiple ways to reach our international trade specialists</p>
+            <h2 className={styles.sectionTitle}>Our Contact Details</h2>
+            <p className={styles.infoSubtitle}>
+              Multiple ways to reach our international trade specialists
+            </p>
 
             <div className={styles.infoGrid}>
+              {/* Company */}
               <div className={styles.infoCard}>
                 <div className={styles.infoIcon}>
                   <MdBusiness />
                 </div>
                 <div>
                   <h3>Company Info</h3>
-                  <p><strong>ANTSAR International Trade</strong></p>
-                  <p>Import/Export Specialists</p>
+                  <p><strong>{COMPANY_NAME}</strong></p>
+                  <p>{COMPANY_ROLE}</p>
                 </div>
               </div>
 
+              {/* Email */}
               <div className={styles.infoCard}>
                 <div className={styles.infoIcon}>
                   <FaEnvelope />
                 </div>
                 <div>
                   <h3>Email</h3>
-                  <a href="mailto:antsartrade@gmail.com">antsartrade@gmail.com</a>
+                  <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
                   <p className={styles.note}>Preferred for detailed inquiries</p>
                 </div>
               </div>
 
+              {/* Phone */}
               <div className={styles.infoCard}>
                 <div className={styles.infoIcon}>
                   <FaPhone />
                 </div>
                 <div>
                   <h3>Phone (Turkey)</h3>
-                  <a href="tel:+905422618756">+90 542 261 87 56</a>
-                  <p className={styles.note}>Mon-Fri, 9AM-6PM (GMT+3)</p>
+                  <a href={`tel:${PHONE_E164}`}>{PHONE_DISPLAY}</a>
+                  <p className={styles.note}>Mon–Fri, 9AM–6PM (GMT+3)</p>
                 </div>
               </div>
 
+              {/* WhatsApp */}
               <div className={styles.infoCard}>
                 <div className={styles.infoIcon}>
                   <FaWhatsapp />
@@ -182,40 +361,30 @@ const Contact = () => {
                 <div>
                   <h3>WhatsApp (Turkey)</h3>
                   <a
-                    href="https://wa.me/905422618756?text=Hello%20ANTSAR%20Team,%20I%20need%20information%20about%20your%20services"
+                    href={`${WA_BASE_URL}?text=Hello%20ANTSAR%20Team,%20I%20need%20information%20about%20your%20services`}
                     target="_blank"
                     rel="noreferrer"
                   >
-                    +90 542 261 87 56
+                    {PHONE_DISPLAY}
                   </a>
                   <p className={styles.note}>Click for instant messaging</p>
                 </div>
               </div>
 
+              {/* Hours */}
               <div className={styles.infoCard}>
                 <div className={styles.infoIcon}>
                   <FaClock />
                 </div>
                 <div>
                   <h3>Business Hours</h3>
-                  <p><strong>Turkey:</strong> 9AM-6PM (GMT+3)</p>
-                  <p><strong>Ethiopia:</strong> 9AM-6PM (GMT+3)</p>
-                </div>
-              </div>
-
-              <div className={styles.infoCard}>
-                <div className={styles.infoIcon}>
-                  <FaMapMarkerAlt />
-                </div>
-                <div>
-                  <h3>Our Locations</h3>
-                  <p><strong>Turkey:</strong> Istanbul Office</p>
-                  <p><strong>Ethiopia:</strong> Addis Ababa Office</p>
-                  <button className={styles.mapButton}>View on Map</button>
+                  <p><strong>Turkey:</strong> 9AM–6PM (GMT+3)</p>
+                  <p><strong>Ethiopia:</strong> 9AM–6PM (GMT+3)</p>
                 </div>
               </div>
             </div>
 
+            {/* Social */}
             <div className={styles.socialSection}>
               <h3>Connect With Us</h3>
               <div className={styles.socialLinks}>
@@ -229,9 +398,11 @@ const Contact = () => {
         </div>
       </section>
 
-      {/* WhatsApp Float Button */}
+      {/* =======================
+          Floating WhatsApp Button
+      ======================== */}
       <a
-        href="https://wa.me/905422618756?text=Hello%20ANTSAR%20Team,%20I%20need%20information%20about%20your%20services"
+        href={`${WA_BASE_URL}?text=Hello%20ANTSAR%20Team,%20I%20need%20information%20about%20your%20services`}
         className={styles.whatsappFloat}
         target="_blank"
         rel="noreferrer"
