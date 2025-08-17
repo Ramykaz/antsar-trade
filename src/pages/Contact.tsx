@@ -4,10 +4,8 @@ import {
   FaEnvelope,
   FaPhone,
   FaPaperPlane,
-  FaClock,
-  FaLinkedin
 } from 'react-icons/fa';
-import { MdBusiness } from 'react-icons/md';
+
 import emailjs from '@emailjs/browser';
 import styles from './Contact.module.css';
 
@@ -20,8 +18,7 @@ const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
 const EMAILJS_PUBLIC_KEY = 'YOUR_PUBLIC_KEY';
 
 // --- Constants (single source of truth) ---
-const COMPANY_NAME = 'ANTSAR International Trade';
-const COMPANY_ROLE = 'Import/Export Specialists';
+const COMPANY_NAME = 'ANTSAR Foriegn Trade';
 
 const EMAIL = 'antsartrade@gmail.com';
 const PHONE_E164 = '+905056780600';       // tel: format
