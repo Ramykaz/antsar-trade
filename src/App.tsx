@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Navbar from './Components/Navbar';  // Capital "C"
-import Footer from './Components/Footer';   // Capital "C"
+import Navbar from './Components/Navbar';
+import Footer from './Components/Footer';
 import Home from './pages/Home';
 import About from './pages/About';
 import Services from './pages/Services';
