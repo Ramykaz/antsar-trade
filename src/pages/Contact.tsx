@@ -8,23 +8,16 @@ import {
   FaLinkedin
 } from 'react-icons/fa';
 import { MdBusiness } from 'react-icons/md';
+import emailjs from '@emailjs/browser';
 import styles from './Contact.module.css';
 
-// If you have a hero image in your assets folder, keep this import.
-// Replace the file name to match your asset. If you don't have it yet,
-// you can comment this out and the hero will still render its gradient.
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-ignore
 import contactHero from '../assets/contact-hero.jpg';
 
-/**
- * CONTACT PAGE
- *  - Matches homepage gold/black style
- *  - Uses your exact company details and channels
- *  - No office / map sections (removed)
- *  - Primary WhatsApp number updated to +905056780600
- *  - Includes floating WhatsApp button and a form-side WhatsApp action
- */
+// EmailJS Configuration - Replace these with your actual IDs
+const EMAILJS_SERVICE_ID = 'YOUR_SERVICE_ID';
+const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
+const EMAILJS_PUBLIC_KEY = 'YOUR_PUBLIC_KEY';
 
 // --- Constants (single source of truth) ---
 const COMPANY_NAME = 'ANTSAR International Trade';
@@ -49,12 +42,18 @@ const Contact: React.FC = () => {
   const formRef = useRef<HTMLFormElement>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [formData, setFormData] = useState<FormState>({
     name: '',
     email: '',
     subject: '',
     message: '',
   });
+
+  // Initialize EmailJS
+  useEffect(() => {
+    emailjs.init(EMAILJS_PUBLIC_KEY);
+  }, []);
 
   // Build a friendly WhatsApp message dynamically from form fields
   const waPrefill = useMemo(() => {
@@ -88,6 +87,7 @@ const Contact: React.FC = () => {
       ...prev,
       [name]: value,
     }));
+    if (submitError) setSubmitError(null);
   };
 
   // Optional: Ctrl/Cmd+Enter to submit
@@ -97,28 +97,48 @@ const Contact: React.FC = () => {
     }
   };
 
-  // Submit (simulate) — keep your logic, just polish UX
-  const handleSubmit = (e: React.FormEvent) => {
+  // Direct WhatsApp open from a dedicated button
+  const handleWhatsAppClick = () => {
+    window.open(waPrefill, '_blank', 'noopener,noreferrer');
+  };
+
+  // Handle form submission with EmailJS
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setSubmitError(null);
 
-    // Simulate form submission (replace with actual API call)
-    setTimeout(() => {
-      setIsSubmitting(false);
+    try {
+      if (!formRef.current) {
+        throw new Error('Form reference not found');
+      }
+
+      // Send email using EmailJS
+      const result = await emailjs.sendForm(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        formRef.current,
+        EMAILJS_PUBLIC_KEY
+      );
+
+      if (result.status !== 200) {
+        throw new Error('Failed to send message');
+      }
+
       setSubmitSuccess(true);
-      formRef.current?.reset();
+      formRef.current.reset();
       setFormData({
         name: '',
         email: '',
         subject: '',
         message: '',
       });
-    }, 1500);
-  };
-
-  // Direct WhatsApp open from a dedicated button
-  const handleWhatsAppClick = () => {
-    window.open(waPrefill, '_blank', 'noopener,noreferrer');
+    } catch (error) {
+      console.error('Email sending failed:', error);
+      setSubmitError('Failed to send message. Please try again or contact us directly via WhatsApp.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -285,6 +305,13 @@ const Contact: React.FC = () => {
                 Tip: Press <kbd>Ctrl</kbd>/<kbd>⌘</kbd> + <kbd>Enter</kbd> to send quickly.
               </p>
 
+              {/* Error message */}
+              {submitError && (
+                <div className={styles.errorMessage} role="alert">
+                  {submitError}
+                </div>
+              )}
+
               {/* Success feedback (auto hides) */}
               {submitSuccess && (
                 <div className={styles.successMessage} role="status" aria-live="polite">
@@ -292,7 +319,7 @@ const Contact: React.FC = () => {
                   <div>
                     <h4>Message sent successfully!</h4>
                     <p>
-                      We’ll respond within 24 hours. For urgent matters,
+                      We'll respond within 24 hours. For urgent matters,
                       you can also reach us on WhatsApp.
                     </p>
                     <a
@@ -307,93 +334,6 @@ const Contact: React.FC = () => {
                 </div>
               )}
             </form>
-          </div>
-
-          {/* ---- Info Column ---- */}
-          <div className={styles.infoSection}>
-            <h2 className={styles.sectionTitle}>Our Contact Details</h2>
-            <p className={styles.infoSubtitle}>
-              Multiple ways to reach our international trade specialists
-            </p>
-
-            <div className={styles.infoGrid}>
-              {/* Company */}
-              <div className={styles.infoCard}>
-                <div className={styles.infoIcon}>
-                  <MdBusiness />
-                </div>
-                <div>
-                  <h3>Company Info</h3>
-                  <p><strong>{COMPANY_NAME}</strong></p>
-                  <p>{COMPANY_ROLE}</p>
-                </div>
-              </div>
-
-              {/* Email */}
-              <div className={styles.infoCard}>
-                <div className={styles.infoIcon}>
-                  <FaEnvelope />
-                </div>
-                <div>
-                  <h3>Email</h3>
-                  <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
-                  <p className={styles.note}>Preferred for detailed inquiries</p>
-                </div>
-              </div>
-
-              {/* Phone */}
-              <div className={styles.infoCard}>
-                <div className={styles.infoIcon}>
-                  <FaPhone />
-                </div>
-                <div>
-                  <h3>Phone (Turkey)</h3>
-                  <a href={`tel:${PHONE_E164}`}>{PHONE_DISPLAY}</a>
-                  <p className={styles.note}>Mon–Fri, 9AM–6PM (GMT+3)</p>
-                </div>
-              </div>
-
-              {/* WhatsApp */}
-              <div className={styles.infoCard}>
-                <div className={styles.infoIcon}>
-                  <FaWhatsapp />
-                </div>
-                <div>
-                  <h3>WhatsApp (Turkey)</h3>
-                  <a
-                    href={`${WA_BASE_URL}?text=Hello%20ANTSAR%20Team,%20I%20need%20information%20about%20your%20services`}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    {PHONE_DISPLAY}
-                  </a>
-                  <p className={styles.note}>Click for instant messaging</p>
-                </div>
-              </div>
-
-              {/* Hours */}
-              <div className={styles.infoCard}>
-                <div className={styles.infoIcon}>
-                  <FaClock />
-                </div>
-                <div>
-                  <h3>Business Hours</h3>
-                  <p><strong>Turkey:</strong> 9AM–6PM (GMT+3)</p>
-                  <p><strong>Ethiopia:</strong> 9AM–6PM (GMT+3)</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Social */}
-            <div className={styles.socialSection}>
-              <h3>Connect With Us</h3>
-              <div className={styles.socialLinks}>
-                <a href="#" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-                  <FaLinkedin />
-                </a>
-                {/* Add more social icons as needed */}
-              </div>
-            </div>
           </div>
         </div>
       </section>
