@@ -1,4 +1,3 @@
-import React from 'react';
 import { FaLinkedin, FaTwitter, FaInstagram, FaShip, FaGlobe, FaPhone, FaEnvelope } from 'react-icons/fa';
 import styles from './Footer.module.css';
 
@@ -8,6 +7,7 @@ const Footer = () => {
       <div className={styles.footerTop}>
         <div className={styles.container}>
           <div className={styles.footerGrid}>
+
             {/* Company Info */}
             <div className={styles.footerColumn}>
               <div className={styles.logoContainer}>
@@ -15,7 +15,7 @@ const Footer = () => {
                 <span className={styles.logoText}>ANTSAR</span>
               </div>
               <p className={styles.companyDescription}>
-                Specializing in international trade solutions between Turkey and Africa
+                Specializing in international trade solutions between Turkey and Africa.
               </p>
               <div className={styles.socialLinks}>
                 <a href="#" aria-label="LinkedIn"><FaLinkedin /></a>
@@ -64,6 +64,7 @@ const Footer = () => {
                 </li>
               </ul>
             </div>
+
           </div>
         </div>
       </div>

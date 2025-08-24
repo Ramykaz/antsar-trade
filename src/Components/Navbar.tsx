@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { FaBars, FaTimes } from 'react-icons/fa';
-import logo from '../assets/logo.jpg'; // Your black and white logo
+import logo from '../assets/logo.jpg';
 import styles from './Navbar.module.css';
 
 const Navbar = () => {
@@ -21,20 +21,17 @@ const Navbar = () => {
         {/* Logo */}
         <Link to="/" className={styles.logoLink}>
           <img src={logo} alt="ANTSAR Logo" className={styles.logo} />
-          <span className={styles.logoText}></span>
         </Link>
 
-        {/* Desktop Navigation */}
+        {/* Desktop Menu */}
         <div className={styles.desktopMenu}>
-          {navItems.map((item) => (
+          {navItems.map(({ path, name }) => (
             <Link
-              key={item.path}
-              to={item.path}
-              className={`${styles.navLink} ${
-                location.pathname === item.path ? styles.active : ''
-              }`}
+              key={path}
+              to={path}
+              className={`${styles.navLink} ${location.pathname === path ? styles.active : ''}`}
             >
-              {item.name}
+              {name}
             </Link>
           ))}
         </div>
@@ -42,24 +39,22 @@ const Navbar = () => {
         {/* Mobile Menu Button */}
         <button
           className={styles.mobileMenuButton}
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={() => setIsOpen((prev) => !prev)}
           aria-label="Toggle navigation"
         >
           {isOpen ? <FaTimes /> : <FaBars />}
         </button>
 
-        {/* Mobile Navigation */}
+        {/* Mobile Menu */}
         <div className={`${styles.mobileMenu} ${isOpen ? styles.open : ''}`}>
-          {navItems.map((item) => (
+          {navItems.map(({ path, name }) => (
             <Link
-              key={item.path}
-              to={item.path}
-              className={`${styles.mobileNavLink} ${
-                location.pathname === item.path ? styles.active : ''
-              }`}
+              key={path}
+              to={path}
+              className={`${styles.mobileNavLink} ${location.pathname === path ? styles.active : ''}`}
               onClick={() => setIsOpen(false)}
             >
-              {item.name}
+              {name}
             </Link>
           ))}
         </div>
@@ -67,6 +62,5 @@ const Navbar = () => {
     </nav>
   );
 };
-
 
 export default Navbar;

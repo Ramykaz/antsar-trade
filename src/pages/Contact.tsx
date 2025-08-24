@@ -1,15 +1,19 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import type { ChangeEvent, KeyboardEvent, FormEvent } from 'react';
 import { FaWhatsapp, FaEnvelope, FaPhone, FaPaperPlane } from 'react-icons/fa';
-import emailjs from '@emailjs/browser';
 import styles from './Contact.module.css';
 
+// If you don't have a *.jpg module declaration, keep this ts-ignore.
+// Better: add in src/declarations.d.ts: `declare module '*.jpg';`
 // @ts-ignore
 import contactHero from '../assets/contact-hero.jpg';
 
-// EmailJS Configuration
-const EMAILJS_SERVICE_ID = 'YOUR_SERVICE_ID';
-const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
-const EMAILJS_PUBLIC_KEY = 'YOUR_PUBLIC_KEY';
+type FormState = {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+};
 
 // Contact Info
 const COMPANY_NAME = 'ANTSAR Foreign Trade';
@@ -19,15 +23,9 @@ const PHONE_DISPLAY = '+905056780600';
 const WA_NUMBER = '905056780600';
 const WA_BASE_URL = `https://wa.me/${WA_NUMBER}`;
 
-type FormState = {
-  name: string;
-  email: string;
-  subject: string;
-  message: string;
-};
-
-const Contact: React.FC = () => {
+function Contact(): JSX.Element {
   const formRef = useRef<HTMLFormElement>(null);
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
@@ -38,11 +36,7 @@ const Contact: React.FC = () => {
     message: '',
   });
 
-  // Initialize EmailJS
-  useEffect(() => {
-    emailjs.init(EMAILJS_PUBLIC_KEY);
-  }, []);
-
+  // Prefill message for WhatsApp
   const waPrefill = useMemo(() => {
     const lines = [
       `Hello ${COMPANY_NAME},`,
@@ -50,31 +44,31 @@ const Contact: React.FC = () => {
       formData.subject && `Subject: ${formData.subject}`,
       formData.message && `Message: ${formData.message}`,
       formData.email && `Reply to: ${formData.email}`,
-    ].filter(Boolean).join('\n');
+    ]
+      .filter(Boolean)
+      .join('\n');
 
-    return `${WA_BASE_URL}?text=${encodeURIComponent(lines || 'Hello, I need information about your services.')}`;
+    return `${WA_BASE_URL}?text=${encodeURIComponent(
+      lines || 'Hello, I need information about your services.'
+    )}`;
   }, [formData]);
 
+  // Auto-hide success after a few seconds
   useEffect(() => {
-    if (submitSuccess) {
-      const timer = setTimeout(() => setSubmitSuccess(false), 4000);
-      return () => clearTimeout(timer);
-    }
+    if (!submitSuccess) return;
+    const timer = setTimeout(() => setSubmitSuccess(false), 4000);
+    return () => clearTimeout(timer);
   }, [submitSuccess]);
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
-    submitError && setSubmitError(null);
+    if (submitError) setSubmitError(null);
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+  const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
     if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
-      formRef.current?.dispatchEvent(
-        new Event('submit', { cancelable: true, bubbles: true })
-      );
+      formRef.current?.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
     }
   };
 
@@ -82,26 +76,36 @@ const Contact: React.FC = () => {
     window.open(waPrefill, '_blank', 'noopener,noreferrer');
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const validateForm = () => {
+    if (!formData.name || !formData.email || !formData.message) {
+      setSubmitError('Please fill all required fields.');
+      return false;
+    }
+    if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      setSubmitError('Please enter a valid email address.');
+      return false;
+    }
+    if (formData.message.trim().length < 10) {
+      setSubmitError('Message should be at least 10 characters.');
+      return false;
+    }
+    return true;
+  };
+
+  // No EmailJS: we just validate and show success (or suggest WhatsApp)
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsSubmitting(true);
     setSubmitError(null);
 
+    if (!validateForm()) return;
+
+    setIsSubmitting(true);
     try {
-      if (!formRef.current) throw new Error('Form reference not found');
-
-      await emailjs.sendForm(
-        EMAILJS_SERVICE_ID,
-        EMAILJS_TEMPLATE_ID,
-        formRef.current,
-        EMAILJS_PUBLIC_KEY
-      );
-
+      // Simulate a successful send (no external service)
       setSubmitSuccess(true);
-      formRef.current.reset();
+      formRef.current?.reset();
       setFormData({ name: '', email: '', subject: '', message: '' });
-    } catch (error) {
-      console.error('Email sending failed:', error);
+    } catch (err) {
       setSubmitError('Failed to send message. Please try WhatsApp for immediate assistance.');
     } finally {
       setIsSubmitting(false);
@@ -113,7 +117,7 @@ const Contact: React.FC = () => {
       <section className={styles.hero} aria-label="Contact hero">
         <img
           src={contactHero}
-          alt=""
+          alt="Contact our international trade experts"
           className={styles.heroImage}
           loading="eager"
           decoding="async"
@@ -122,12 +126,10 @@ const Contact: React.FC = () => {
 
         <div className={styles.heroContent}>
           <h1>Connect With Us</h1>
-          <p>
-            Our team is ready to assist with your international trade inquiries.
-          </p>
+          <p>Our team is ready to assist with your international trade inquiries.</p>
 
           <div className={styles.quickLinks} role="group" aria-label="Quick contact links">
-            <a className={styles.quickLink} href={`mailto:${EMAIL}`} aria-label="Email us">
+            <a className={styles.quickLink && styles.quickLink} href={`mailto:${EMAIL}`} aria-label="Email us">
               <FaEnvelope /> {EMAIL}
             </a>
             <a className={styles.quickLink} href={`tel:${PHONE_E164}`} aria-label="Call us">
@@ -204,12 +206,12 @@ const Contact: React.FC = () => {
               </div>
 
               <div className={styles.formActions}>
-                <button
-                  type="submit"
-                  className={styles.submitButton}
-                  disabled={isSubmitting}
-                >
-                  {isSubmitting ? 'Sending...' : <><FaPaperPlane /> Send Message</>}
+                <button type="submit" className={styles.submitButton} disabled={isSubmitting}>
+                  {isSubmitting ? 'Sending...' : (
+                    <>
+                      <FaPaperPlane /> Send Message
+                    </>
+                  )}
                 </button>
                 <button
                   type="button"
@@ -221,13 +223,13 @@ const Contact: React.FC = () => {
               </div>
 
               {submitError && (
-                <div className={styles.errorMessage} role="alert">
+                <div className={styles.errorMessage} role="alert" aria-live="polite">
                   {submitError}
                 </div>
               )}
 
               {submitSuccess && (
-                <div className={styles.successMessage} role="status">
+                <div className={styles.successMessage} role="status" aria-live="polite">
                   <div className={styles.successIcon}>✓</div>
                   <div>
                     <h4>Message Sent!</h4>
@@ -255,6 +257,6 @@ const Contact: React.FC = () => {
       </a>
     </div>
   );
-};
+}
 
 export default Contact;
