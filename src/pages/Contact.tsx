@@ -23,7 +23,7 @@ const PHONE_DISPLAY = '+905056780600';
 const WA_NUMBER = '905056780600';
 const WA_BASE_URL = `https://wa.me/${WA_NUMBER}`;
 
-function Contact(): JSX.Element {
+function Contact() {
   const formRef = useRef<HTMLFormElement>(null);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -129,7 +129,7 @@ function Contact(): JSX.Element {
           <p>Our team is ready to assist with your international trade inquiries.</p>
 
           <div className={styles.quickLinks} role="group" aria-label="Quick contact links">
-            <a className={styles.quickLink && styles.quickLink} href={`mailto:${EMAIL}`} aria-label="Email us">
+            <a className={styles.quickLink} href={`mailto:${EMAIL}`} aria-label="Email us">
               <FaEnvelope /> {EMAIL}
             </a>
             <a className={styles.quickLink} href={`tel:${PHONE_E164}`} aria-label="Call us">
