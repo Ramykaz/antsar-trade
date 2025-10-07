@@ -13,14 +13,14 @@ import {
   FaWineBottle,
 } from "react-icons/fa";
 import styles from "./Services.module.css";
-import servicesHero from "../assets/services-hero.jpg";
+import servicesHero from "../assets/services-hero.webp";
 
 // Import your images for Core Services here:
-import impExpImg from "../assets/import-export.jpg";
-import strategicSourcingImg from "../assets/strategic-sourcing.jpg";
-import logisticsImg from "../assets/logistics.jpg";
-import customsImg from "../assets/customs.jpg";
-import marketIntelImg from "../assets/market-intelligence.jpg";
+import impExpImg from "../assets/import-export.webp";
+import strategicSourcingImg from "../assets/strategic-sourcing.webp";
+import logisticsImg from "../assets/logistics.webp";
+import customsImg from "../assets/customs.webp";
+import marketIntelImg from "../assets/market-intelligence.webp";
 
 const Services = () => {
   const services = [
@@ -119,7 +119,13 @@ const Services = () => {
       {/* Hero Section */}
       <section className={styles.hero}>
         <div className={styles.heroOverlay}></div>
-        <img src={servicesHero} alt="Global Trade Services" className={styles.heroImage} />
+        <img
+          src={servicesHero}
+          alt="Global Trade Services"
+          className={styles.heroImage}
+          loading="lazy"
+          decoding="async"
+        />
         <div className={styles.heroContent}>
           <h1>Our Trade Solutions</h1>
           <p>Comprehensive services designed for seamless international commerce</p>

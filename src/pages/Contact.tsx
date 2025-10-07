@@ -6,7 +6,7 @@ import styles from './Contact.module.css';
 // If you don't have a *.jpg module declaration, keep this ts-ignore.
 // Better: add in src/declarations.d.ts: `declare module '*.jpg';`
 // @ts-ignore
-import contactHero from '../assets/contact-hero.jpg';
+import contactHero from '../assets/contact-hero.webp';
 
 type FormState = {
   name: string;
@@ -115,13 +115,13 @@ function Contact() {
   return (
     <div className={styles.contactPage}>
       <section className={styles.hero} aria-label="Contact hero">
-        <img
-          src={contactHero}
-          alt="Contact our international trade experts"
-          className={styles.heroImage}
-          loading="eager"
-          decoding="async"
-        />
+      <img
+        src={contactHero}
+        alt="Contact our international trade experts"
+        className={styles.heroImage}
+        loading="lazy"
+        decoding="async"
+      />
         <div className={styles.heroOverlay} aria-hidden />
 
         <div className={styles.heroContent}>

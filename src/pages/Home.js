@@ -2,7 +2,7 @@ import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { Link } from 'react-router-dom';
 import styles from './Home.module.css';
 import { FiGlobe, FiTrendingUp, FiShield, FiCompass, FiBox, FiShoppingBag, FiCoffee, FiHome } from 'react-icons/fi';
-import heroImage from '../assets/hero-image.jpg';
+import heroImage from '../assets/hero-image.webp';
 const industries = [
     { title: "Agriculture", icon: _jsx(FiCoffee, {}), description: "Premium sourcing of coffee, spices, and agricultural commodities" },
     { title: "Construction", icon: _jsx(FiHome, {}), description: "Building materials and industrial supplies" },

@@ -12,7 +12,7 @@ import {
   FiCoffee,
   FiHome
 } from 'react-icons/fi';
-import heroImage from '../assets/hero-image.jpg';
+import heroImage from '../assets/hero-image.webp';
 
 interface CardItem {
   title: string;
@@ -39,7 +39,13 @@ const Home: React.FC = () => {
     <div className={styles.home}>
       {/* Hero Section */}
       <section className={styles.hero}>
-        <img src={heroImage} alt="Global Trade" className={styles.heroImage} />
+      <img
+        src={homeHero}
+        alt="Home hero"
+        className={styles.heroImage}
+        loading="lazy"
+        decoding="async"
+      />
         <div className={styles.heroOverlay}></div>
         <div className={styles.heroContent}>
           <h1 className={styles.logo}>

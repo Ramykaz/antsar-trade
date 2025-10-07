@@ -1,6 +1,6 @@
 import styles from './About.module.css';
 import { FaGlobeAmericas, FaHandshake, FaChessKnight, FaAnchor } from 'react-icons/fa';
-import aboutHero from '../assets/about-hero.jpg';
+import aboutHero from '../assets/about-hero.webp';
 
 const About = () => {
   return (
