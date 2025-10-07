@@ -40,7 +40,7 @@ const Home: React.FC = () => {
       {/* Hero Section */}
       <section className={styles.hero}>
       <img
-        src={homeHero}
+        src={heroImage}
         alt="Home hero"
         className={styles.heroImage}
         loading="lazy"
