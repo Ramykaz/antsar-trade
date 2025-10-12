@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { FaLinkedin, FaTwitter, FaInstagram, FaShip, FaGlobe, FaPhone, FaEnvelope } from 'react-icons/fa';
 import styles from './Footer.module.css';
 
@@ -28,10 +29,10 @@ const Footer = () => {
             <div className={styles.footerColumn}>
               <h3 className={styles.columnTitle}>Quick Links</h3>
               <ul className={styles.footerLinks}>
-                <li><a href="/">Home</a></li>
-                <li><a href="/services">Services</a></li>
-                <li><a href="/about">About Us</a></li>
-                <li><a href="/contact">Contact</a></li>
+                <li><Link to="/">Home</Link></li>
+                <li><Link to="/services">Services</Link></li>
+                <li><Link to="/about">About Us</Link></li>
+                <li><Link to="/contact">Contact</Link></li>
               </ul>
             </div>
 
@@ -39,10 +40,10 @@ const Footer = () => {
             <div className={styles.footerColumn}>
               <h3 className={styles.columnTitle}>Our Services</h3>
               <ul className={styles.footerLinks}>
-                <li><a href="/services">Import/Export</a></li>
-                <li><a href="/services">Commodity Trading</a></li>
-                <li><a href="/services">Logistics</a></li>
-                <li><a href="/services">Market Research</a></li>
+                <li><Link to="/services">Import/Export</Link></li>
+                <li><Link to="/services">Commodity Trading</Link></li>
+                <li><Link to="/services">Logistics</Link></li>
+                <li><Link to="/services">Market Research</Link></li>
               </ul>
             </div>
 
@@ -73,9 +74,9 @@ const Footer = () => {
         <div className={styles.container}>
           <p>&copy; {new Date().getFullYear()} ANTSAR Foreign Trade. All Rights Reserved.</p>
           <div className={styles.legalLinks}>
-            <a href="/Privacy">Privacy Policy</a>
+            <Link to="/privacy">Privacy Policy</Link>
             <span>|</span>
-            <a href="/Terms">Terms of Service</a>
+            <Link to="/terms">Terms of Service</Link>
           </div>
         </div>
       </div>
