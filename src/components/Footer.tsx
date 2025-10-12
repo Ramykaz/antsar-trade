@@ -73,9 +73,9 @@ const Footer = () => {
         <div className={styles.container}>
           <p>&copy; {new Date().getFullYear()} ANTSAR Foreign Trade. All Rights Reserved.</p>
           <div className={styles.legalLinks}>
-            <a href="/privacy">Privacy Policy</a>
+            <a href="/Privacy">Privacy Policy</a>
             <span>|</span>
-            <a href="/terms">Terms of Service</a>
+            <a href="/Terms">Terms of Service</a>
           </div>
         </div>
       </div>

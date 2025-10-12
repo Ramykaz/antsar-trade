@@ -2,7 +2,7 @@ import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { FaBars, FaTimes } from 'react-icons/fa';
-import logo from '../assets/logo.jpg';
+import logo from '../assets/ss.jpg';
 import styles from './Navbar.module.css';
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
