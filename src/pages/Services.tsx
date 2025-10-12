@@ -103,15 +103,38 @@ const Services = () => {
     responsive: [
       {
         breakpoint: 1024,
-        settings: { slidesToShow: 2 },
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+          dots: true
+        }
       },
       {
-        breakpoint: 600,
-        settings: { slidesToShow: 1 },
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          dots: true,
+          arrows: true
+        }
       },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          dots: true,
+          arrows: false,
+          centerMode: true,
+          centerPadding: '20px'
+        }
+      }
     ],
     arrows: true,
-    autoplay: false,
+    autoplay: true,
+    autoplaySpeed: 5000,
+    cssEase: "ease-in-out",
+    pauseOnHover: true
   };
 
   return (
