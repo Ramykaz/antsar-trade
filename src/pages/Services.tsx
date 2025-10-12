@@ -115,7 +115,8 @@ const Services = () => {
           slidesToShow: 1,
           slidesToScroll: 1,
           dots: true,
-          arrows: true
+          arrows: true,
+          centerMode: false
         }
       },
       {
@@ -125,8 +126,7 @@ const Services = () => {
           slidesToScroll: 1,
           dots: true,
           arrows: false,
-          centerMode: true,
-          centerPadding: '20px'
+          centerMode: false
         }
       }
     ],

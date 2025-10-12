@@ -317,10 +317,20 @@
   font-size: 0.9rem;
 }
 
-/* Mobile responsiveness */
+/* ----------- MOBILE RESPONSIVENESS ------------ */
+@media (max-width: 1024px) {
+  .industriesSlider {
+    padding: 0 15px;
+  }
+
+  .industrySlide {
+    padding: 0 8px;
+  }
+}
+
 @media (max-width: 768px) {
   .industriesSlider {
-    padding: 0 5px;
+    padding: 0 10px;
   }
 
   .industrySlide {
@@ -328,38 +338,84 @@
   }
 
   .industryImage {
-    height: 350px;
+    height: 320px;
   }
 
   .industryContent {
-    padding: 1rem;
+    bottom: 1rem;
+    left: 1rem;
+    right: 1rem;
+  }
+
+  .industryIconContainer {
+    font-size: 2rem;
   }
 
   .industryContent h3 {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
   }
 
   .industryList {
-    font-size: 0.85rem;
+    font-size: 0.9rem;
+    max-height: 5rem;
   }
 }
 
 @media (max-width: 480px) {
+  .industriesSlider {
+    padding: 0 5px;
+  }
+
+  .industrySlide {
+    padding: 0 3px;
+  }
+
   .industryImage {
-    height: 300px;
+    height: 280px;
   }
 
   .industryContent {
-    padding: 0.8rem;
+    bottom: 0.8rem;
+    left: 0.8rem;
+    right: 0.8rem;
+  }
+
+  .industryIconContainer {
+    font-size: 1.8rem;
+    margin-bottom: 0.3rem;
   }
 
   .industryContent h3 {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .industryList {
+    font-size: 0.8rem;
+    max-height: 4rem;
   }
 
   .industryList li {
-    margin-bottom: 0.3rem;
+    padding-left: 12px;
+    margin-bottom: 0.2rem;
   }
+
+  .bullet {
+    width: 6px;
+    height: 6px;
+    top: 6px;
+  }
+}
+.industriesSlider {
+  margin-top: 2rem;
+  overflow: hidden; /* Prevents horizontal scroll */
+}
+
+.industrySlide {
+  padding: 1rem;
+  position: relative;
+  min-height: 1px; /* Ensures proper rendering */
 }
 /* ----------- ANIMATIONS ------------ */
 
