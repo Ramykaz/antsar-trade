@@ -2,18 +2,21 @@
   publish = "dist"
   command = "npm run build"
 
+# Fix redirect loop - only redirect non-asset paths
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
+  conditions = {Language = ["en"], Country = ["US"]}
+
+# Explicit HTTPS redirect (remove if causing issues)
+[[redirects]]
+  from = "http://antsartrade.com/*"
+  to = "https://antsartrade.com/:splat"
+  status = 301
 
 [[headers]]
   for = "/*"
   [headers.values]
     X-Frame-Options = "DENY"
     X-XSS-Protection = "1; mode=block"
-
-[[headers]]
-  for = "/assets/*"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000"
