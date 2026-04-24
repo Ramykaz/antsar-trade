@@ -24,7 +24,6 @@ function Contact() {
   const { t } = useLanguage();
   const formRef = useRef<HTMLFormElement>(null);
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [formData, setFormData] = useState<FormState>({
@@ -88,48 +87,24 @@ function Contact() {
     return true;
   };
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSubmitError(null);
 
     if (!validateForm()) return;
 
-    const accessKey = import.meta.env.VITE_WEB3FORMS_KEY as string | undefined;
-    if (!accessKey) {
-      setSubmitError('Contact form is not configured yet. Please reach us via WhatsApp.');
-      return;
-    }
+    const subject = encodeURIComponent(
+      formData.subject || `New inquiry from ${formData.name}`
+    );
+    const body = encodeURIComponent(
+      `Name: ${formData.name}\nEmail: ${formData.email}\n\n${formData.message}`
+    );
 
-    setIsSubmitting(true);
-    try {
-      const response = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          access_key: accessKey,
-          name: formData.name,
-          email: formData.email,
-          subject: formData.subject || `New inquiry from ${formData.name}`,
-          message: formData.message,
-          from_name: 'ANTSAR Website',
-        }),
-      });
+    window.location.href = `mailto:${EMAIL}?subject=${subject}&body=${body}`;
 
-      const data = await response.json().catch(() => ({}));
-
-      if (!response.ok || data.success === false) {
-        throw new Error(data?.message || t.contact.errorGeneric);
-      }
-
-      setSubmitSuccess(true);
-      formRef.current?.reset();
-      setFormData({ name: '', email: '', subject: '', message: '' });
-    } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : t.contact.errorGeneric;
-      setSubmitError(message);
-    } finally {
-      setIsSubmitting(false);
-    }
+    setSubmitSuccess(true);
+    formRef.current?.reset();
+    setFormData({ name: '', email: '', subject: '', message: '' });
   };
 
   return (
@@ -224,10 +199,8 @@ function Contact() {
               </div>
 
               <div className={styles.formActions}>
-                <button type="submit" className={styles.submitButton} disabled={isSubmitting}>
-                  {isSubmitting ? t.contact.btnSending : (
-                    <><FaPaperPlane /> {t.contact.btnSubmit}</>
-                  )}
+                <button type="submit" className={styles.submitButton}>
+                  <FaPaperPlane /> {t.contact.btnSubmit}
                 </button>
                 <button
                   type="button"
