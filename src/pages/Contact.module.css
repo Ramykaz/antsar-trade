@@ -32,7 +32,7 @@
   z-index: 2;
   text-align: center;
   width: min(var(--content-width), 92vw);
-  padding: 0 1rem;
+  padding: 5rem 1rem 2rem;
 }
 
 .heroContent h1 {
