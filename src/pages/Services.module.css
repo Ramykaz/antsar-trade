@@ -238,7 +238,7 @@
   transform: translateX(0);
 }
 
-/* ── Industry Slider ───────────────────────────── */
+/* ── Industry Slider (desktop) ─────────────────── */
 .industriesSlider {
   padding-bottom: 2.8rem;
   width: 100%;
@@ -250,7 +250,6 @@
   box-sizing: border-box;
 }
 
-/* Fix slick internals for correct width calculation */
 :global(.slick-slider),
 :global(.slick-list),
 :global(.slick-track) {
@@ -259,6 +258,22 @@
 
 :global(.slick-slide > div) {
   width: 100%;
+}
+
+/* ── Industry Mobile Stack ─────────────────────── */
+.industriesMobileList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.industriesMobileItem {
+  width: 100%;
+}
+
+.industriesMobileItem .industryCard {
+  height: 260px;
+  border-radius: var(--radius-md);
 }
 
 .industryCard {
@@ -572,13 +587,11 @@
 }
 
 @media (max-width: 700px) {
-  .hero {
-    min-height: 54vh;
-  }
+  .hero { min-height: 50vh; }
 
   .servicesGrid {
     grid-template-columns: 1fr;
-    gap: 0.85rem;
+    gap: 0.7rem;
   }
 
   .serviceCard,
@@ -587,43 +600,80 @@
     grid-column: span 1;
   }
 
-  .industrySlide {
-    padding: 0 2px;
-  }
+  .serviceImage { height: 140px; }
 
-  .industryCard {
-    height: 320px;
-  }
+  .serviceContent { padding: 1rem 1.1rem 1.4rem; }
 
-  .industryContent {
-    padding: 1.2rem 1rem;
-  }
+  .processGrid { grid-template-columns: 1fr; }
+}
 
-  .industryContent h3 {
-    font-size: 1.35rem;
-  }
+@media (max-width: 480px) {
+  .hero { min-height: 44vh; }
 
-  .industryIconWrap {
-    width: 44px;
-    height: 44px;
-    font-size: 1.5rem;
-    margin-bottom: 0.7rem;
-  }
+  .heroContent { padding: 0 1rem; }
 
-  .industryTag {
-    font-size: 0.65rem;
-    padding: 0.22rem 0.5rem;
-  }
+  .heroContent h1 { font-size: 1.05rem; }
 
-  .industryDivider {
-    margin-bottom: 0.6rem;
-  }
+  .heroContent > p { font-size: 0.78rem; }
 
-  .processGrid {
-    grid-template-columns: 1fr;
-  }
+  .eyebrow { font-size: 0.62rem; letter-spacing: 1.2px; }
 
-  .sectionTitle {
-    font-size: clamp(1rem, 4vw, 2rem);
-  }
+  .sectionLight { padding: 1.6rem 0; }
+
+  .sectionDark { padding: 1.4rem 0.9rem 1.8rem; }
+
+  .sectionHeader { margin-bottom: 1.2rem; }
+
+  .sectionTitle { font-size: 1rem; }
+
+  .sectionEyebrow { font-size: 0.62rem; }
+
+  .sectionSubtitle { font-size: 0.8rem; }
+
+  .serviceImage { height: 120px; }
+
+  .serviceContent { padding: 0.9rem 1rem 1.2rem; }
+
+  .serviceContent h3 { font-size: 0.88rem; margin-bottom: 0.3rem; }
+
+  .serviceContent p { font-size: 0.78rem; line-height: 1.55; }
+
+  .iconContainer { width: 38px; height: 38px; font-size: 1.1rem; margin-bottom: 0.65rem; }
+
+  /* Mobile industry cards */
+  .industriesMobileItem .industryCard { height: 230px; }
+
+  .industryContent { padding: 1rem 0.9rem; }
+
+  .industryContent h3 { font-size: 1.1rem; margin-bottom: 0.3rem; }
+
+  .industryIconWrap { width: 38px; height: 38px; font-size: 1.2rem; margin-bottom: 0.5rem; }
+
+  .industryTag { font-size: 0.62rem; padding: 0.18rem 0.42rem; }
+
+  .industryDivider { margin-bottom: 0.5rem; }
+
+  .industryNumber { font-size: 2rem; }
+
+  /* Process */
+  .processSection { padding: 1.6rem 0; }
+
+  .processStep { padding: 1.2rem 1rem; }
+
+  .stepNumber { font-size: 2rem; margin-bottom: 0.4rem; }
+
+  .processStep h3 { font-size: 0.88rem; }
+
+  .processStep p { font-size: 0.78rem; }
+
+  /* CTA */
+  .ctaSection { padding: 0 0 1.6rem; }
+
+  .ctaInner { padding: 1.4rem 1rem; }
+
+  .ctaInner h2 { font-size: 1rem; }
+
+  .ctaInner p { font-size: 0.8rem; margin-bottom: 1rem; }
+
+  .ctaButton { font-size: 0.72rem; padding: 0.62rem 1rem; }
 }

@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -54,31 +55,54 @@ const industryImages = [
   "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=800&q=80",
   "https://images.unsplash.com/photo-1558769132-cb1aea458c5e?auto=format&fit=crop&w=800&q=80",
   "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=800&q=80",
-  // Cargo ship at a major port — Turkey–Africa maritime trade route context
   "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&w=800&q=80",
 ];
 
+const sliderSettings = {
+  dots: true,
+  infinite: true,
+  speed: 600,
+  slidesToShow: 3,
+  slidesToScroll: 1,
+  responsive: [
+    { breakpoint: 1100, settings: { slidesToShow: 2, slidesToScroll: 1, arrows: true } },
+  ],
+  arrows: true,
+  autoplay: true,
+  autoplaySpeed: 4500,
+  cssEase: "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+  pauseOnHover: true,
+  swipeToSlide: true,
+};
+
 const Services = () => {
   const { t } = useLanguage();
+  const [isMobile, setIsMobile] = useState(false);
 
-  const sliderSettings = {
-    dots: true,
-    infinite: true,
-    speed: 600,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    initialSlide: 0,
-    responsive: [
-      { breakpoint: 1100, settings: { slidesToShow: 2, slidesToScroll: 1, arrows: true } },
-      { breakpoint: 900, settings: { slidesToShow: 1, slidesToScroll: 1, arrows: false } },
-    ],
-    arrows: true,
-    autoplay: true,
-    autoplaySpeed: 4500,
-    cssEase: "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-    pauseOnHover: true,
-    swipeToSlide: true,
-  };
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 900);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
+
+  const industryCard = (industry: typeof t.services.industries[0], idx: number) => (
+    <div className={styles.industryCard}>
+      <div className={styles.industryBg} style={{ backgroundImage: `url(${industryImages[idx]})` }} />
+      <div className={styles.industryOverlay} />
+      <span className={styles.industryNumber}>0{idx + 1}</span>
+      <div className={styles.industryContent}>
+        <div className={styles.industryIconWrap}>{industryIcons[idx]}</div>
+        <h3>{industry.title}</h3>
+        <div className={styles.industryDivider} />
+        <div className={styles.industryTags}>
+          {industry.items.map((item, i) => (
+            <span key={i} className={styles.industryTag}>{item}</span>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
 
   return (
     <div className={styles.servicesPage}>
@@ -113,10 +137,7 @@ const Services = () => {
             {t.services.services.map((service, idx) => (
               <div key={idx} className={styles.serviceCard}>
                 <span className={styles.cardAccent} />
-                <div
-                  className={styles.serviceImage}
-                  style={{ backgroundImage: `url(${serviceImages[idx]})` }}
-                >
+                <div className={styles.serviceImage} style={{ backgroundImage: `url(${serviceImages[idx]})` }}>
                   <div className={styles.serviceImageOverlay} />
                 </div>
                 <div className={styles.serviceContent}>
@@ -140,30 +161,23 @@ const Services = () => {
             <p className={styles.sectionSubtitle}>{t.services.industrySubtitle}</p>
           </div>
 
-          <Slider {...sliderSettings} className={styles.industriesSlider}>
-            {t.services.industries.map((industry, idx) => (
-              <div key={idx} className={styles.industrySlide}>
-                <div className={styles.industryCard}>
-                  <div
-                    className={styles.industryBg}
-                    style={{ backgroundImage: `url(${industryImages[idx]})` }}
-                  />
-                  <div className={styles.industryOverlay} />
-                  <span className={styles.industryNumber}>0{idx + 1}</span>
-                  <div className={styles.industryContent}>
-                    <div className={styles.industryIconWrap}>{industryIcons[idx]}</div>
-                    <h3>{industry.title}</h3>
-                    <div className={styles.industryDivider} />
-                    <div className={styles.industryTags}>
-                      {industry.items.map((item, i) => (
-                        <span key={i} className={styles.industryTag}>{item}</span>
-                      ))}
-                    </div>
-                  </div>
+          {isMobile ? (
+            <div className={styles.industriesMobileList}>
+              {t.services.industries.map((industry, idx) => (
+                <div key={idx} className={styles.industriesMobileItem}>
+                  {industryCard(industry, idx)}
                 </div>
-              </div>
-            ))}
-          </Slider>
+              ))}
+            </div>
+          ) : (
+            <Slider {...sliderSettings} className={styles.industriesSlider}>
+              {t.services.industries.map((industry, idx) => (
+                <div key={idx} className={styles.industrySlide}>
+                  {industryCard(industry, idx)}
+                </div>
+              ))}
+            </Slider>
+          )}
         </div>
       </section>
 
