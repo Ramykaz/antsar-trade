@@ -36,7 +36,7 @@
   display: inline-flex;
   align-items: center;
   flex-shrink: 0;
-  order: 2;
+  order: 1;
 }
 
 .logo {
@@ -58,7 +58,7 @@
   display: flex;
   align-items: center;
   gap: 0.25rem;
-  order: 1;
+  order: 2;
 }
 
 .navLink {
@@ -138,7 +138,7 @@
   display: none;
   align-items: center;
   gap: 0.35rem;
-  order: 1;
+  order: 2;
 }
 
 .mobileMenuButton {

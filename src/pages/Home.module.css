@@ -288,16 +288,19 @@
 }
 
 @media (max-width: 620px) {
-  .hero { min-height: 70vh; }
-  .heroContent { padding-top: 4rem; }
+  .hero { min-height: 80vh; }
+  /* Push content below the fixed navbar (70px) with comfortable gap */
+  .heroContent { padding-top: 6rem; }
   .statsRow { grid-template-columns: 1fr; gap: 0.4rem; }
+  .statsRow h3 { font-size: 1.1rem; }
   .grid { grid-template-columns: 1fr; gap: 0.55rem; }
 }
 
 @media (max-width: 480px) {
-  .hero { min-height: 60vh; }
+  .hero { min-height: 80vh; }
 
-  .heroContent { padding: 3rem 0 2rem; }
+  /* Fixed navbar is ~62px; push content well below it */
+  .heroContent { padding: 5.5rem 0 2rem; }
 
   .eyebrow { font-size: 0.62rem; letter-spacing: 1.2px; margin-bottom: 0.6rem; }
 
@@ -312,11 +315,12 @@
 
   .statsRow { margin-top: 1.2rem; }
 
-  .statsRow article { padding: 0.75rem 0.8rem; }
+  .statsRow article { padding: 0.65rem 0.7rem; }
 
-  .statsRow h3 { font-size: 1.3rem; }
+  /* Stat numbers smaller than hero title on mobile */
+  .statsRow h3 { font-size: 0.95rem; }
 
-  .statsRow p { font-size: 0.68rem; }
+  .statsRow p { font-size: 0.65rem; }
 
   .section { padding: 1.6rem 0; }
 

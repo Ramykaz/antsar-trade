@@ -57,7 +57,12 @@ const Navbar = ({ theme, onToggleTheme }: NavbarProps) => {
     <nav className={navClass}>
       <div className={styles.container}>
 
-        {/* Desktop nav links — left */}
+        {/* Logo — left */}
+        <Link to="/" className={styles.logoLink}>
+          <img src={logo} alt="ANTSAR Logo" className={styles.logo} />
+        </Link>
+
+        {/* Desktop nav links — right */}
         <div className={styles.desktopMenu}>
           {navItems.map(({ path, name }) => (
             <Link
@@ -84,15 +89,8 @@ const Navbar = ({ theme, onToggleTheme }: NavbarProps) => {
           </button>
         </div>
 
-        {/* Mobile controls — left */}
+        {/* Mobile controls — right */}
         <div className={styles.mobileActions}>
-          <button
-            className={styles.mobileMenuButton}
-            onClick={() => setIsOpen(prev => !prev)}
-            aria-label="Toggle navigation"
-          >
-            {isOpen ? <FaTimes /> : <FaBars />}
-          </button>
           <button
             className={styles.langToggle}
             onClick={toggleLang}
@@ -107,12 +105,14 @@ const Navbar = ({ theme, onToggleTheme }: NavbarProps) => {
           >
             {theme === 'dark' ? <FaSun /> : <FaMoon />}
           </button>
+          <button
+            className={styles.mobileMenuButton}
+            onClick={() => setIsOpen(prev => !prev)}
+            aria-label="Toggle navigation"
+          >
+            {isOpen ? <FaTimes /> : <FaBars />}
+          </button>
         </div>
-
-        {/* Logo — right */}
-        <Link to="/" className={styles.logoLink}>
-          <img src={logo} alt="ANTSAR Logo" className={styles.logo} />
-        </Link>
 
         {/* Mobile dropdown */}
         <div className={`${styles.mobileMenu} ${isOpen ? styles.open : ''}`}>
