@@ -94,17 +94,30 @@ function Contact() {
 
     if (!validateForm()) return;
 
+    const accessKey = import.meta.env.VITE_WEB3FORMS_KEY as string | undefined;
+    if (!accessKey) {
+      setSubmitError('Contact form is not configured yet. Please reach us via WhatsApp.');
+      return;
+    }
+
     setIsSubmitting(true);
     try {
-      const response = await fetch('/.netlify/functions/send-contact', {
+      const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          access_key: accessKey,
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject || `New inquiry from ${formData.name}`,
+          message: formData.message,
+          from_name: 'ANTSAR Website',
+        }),
       });
 
       const data = await response.json().catch(() => ({}));
 
-      if (!response.ok) {
+      if (!response.ok || data.success === false) {
         throw new Error(data?.message || t.contact.errorGeneric);
       }
 
