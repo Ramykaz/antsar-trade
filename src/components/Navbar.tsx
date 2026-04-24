@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { FaBars, FaTimes, FaSun, FaMoon } from 'react-icons/fa';
 import logo from '../assets/logo.png';
@@ -12,8 +12,33 @@ interface NavbarProps {
 
 const Navbar = ({ theme, onToggleTheme }: NavbarProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const lastScrollY = useRef(0);
   const location = useLocation();
   const { lang, toggleLang, t } = useLanguage();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentY = window.scrollY;
+      setScrolled(currentY > 60);
+      if (currentY > lastScrollY.current && currentY > 120) {
+        setHidden(true);
+        setIsOpen(false);
+      } else {
+        setHidden(false);
+      }
+      lastScrollY.current = currentY;
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    setHidden(false);
+    setIsOpen(false);
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
   const navItems = [
     { path: '/', name: t.nav.home },
@@ -22,13 +47,17 @@ const Navbar = ({ theme, onToggleTheme }: NavbarProps) => {
     { path: '/contact', name: t.nav.contact },
   ];
 
-  return (
-    <nav className={styles.navbar}>
-      <div className={styles.container}>
-        <Link to="/" className={styles.logoLink}>
-          <img src={logo} alt="ANTSAR Logo" className={styles.logo} />
-        </Link>
+  const navClass = [
+    styles.navbar,
+    hidden ? styles.navHidden : '',
+    scrolled ? styles.scrolled : '',
+  ].filter(Boolean).join(' ');
 
+  return (
+    <nav className={navClass}>
+      <div className={styles.container}>
+
+        {/* Desktop nav links — left */}
         <div className={styles.desktopMenu}>
           {navItems.map(({ path, name }) => (
             <Link
@@ -55,7 +84,15 @@ const Navbar = ({ theme, onToggleTheme }: NavbarProps) => {
           </button>
         </div>
 
+        {/* Mobile controls — left */}
         <div className={styles.mobileActions}>
+          <button
+            className={styles.mobileMenuButton}
+            onClick={() => setIsOpen(prev => !prev)}
+            aria-label="Toggle navigation"
+          >
+            {isOpen ? <FaTimes /> : <FaBars />}
+          </button>
           <button
             className={styles.langToggle}
             onClick={toggleLang}
@@ -70,15 +107,14 @@ const Navbar = ({ theme, onToggleTheme }: NavbarProps) => {
           >
             {theme === 'dark' ? <FaSun /> : <FaMoon />}
           </button>
-          <button
-            className={styles.mobileMenuButton}
-            onClick={() => setIsOpen(prev => !prev)}
-            aria-label="Toggle navigation"
-          >
-            {isOpen ? <FaTimes /> : <FaBars />}
-          </button>
         </div>
 
+        {/* Logo — right */}
+        <Link to="/" className={styles.logoLink}>
+          <img src={logo} alt="ANTSAR Logo" className={styles.logo} />
+        </Link>
+
+        {/* Mobile dropdown */}
         <div className={`${styles.mobileMenu} ${isOpen ? styles.open : ''}`}>
           {navItems.map(({ path, name }) => (
             <Link
@@ -91,6 +127,7 @@ const Navbar = ({ theme, onToggleTheme }: NavbarProps) => {
             </Link>
           ))}
         </div>
+
       </div>
     </nav>
   );
