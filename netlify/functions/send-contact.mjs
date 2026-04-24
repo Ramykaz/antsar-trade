@@ -9,53 +9,38 @@ const isValidEmail = (email) => /\S+@\S+\.\S+/.test(email);
 
 export async function handler(event) {
   if (event.httpMethod === 'OPTIONS') {
-    return {
-      statusCode: 200,
-      headers,
-      body: JSON.stringify({ ok: true }),
-    };
+    return { statusCode: 200, headers, body: JSON.stringify({ ok: true }) };
   }
 
   if (event.httpMethod !== 'POST') {
-    return {
-      statusCode: 405,
-      headers,
-      body: JSON.stringify({ message: 'Method not allowed' }),
-    };
+    return { statusCode: 405, headers, body: JSON.stringify({ message: 'Method not allowed' }) };
   }
 
+  let name, email, subject, message;
   try {
-    const { name, email, subject, message } = JSON.parse(event.body || '{}');
+    ({ name, email, subject, message } = JSON.parse(event.body || '{}'));
+  } catch {
+    return { statusCode: 400, headers, body: JSON.stringify({ message: 'Invalid request body.' }) };
+  }
 
-    if (!name || !email || !message) {
-      return {
-        statusCode: 400,
-        headers,
-        body: JSON.stringify({ message: 'Name, email, and message are required.' }),
-      };
-    }
+  if (!name || !email || !message) {
+    return { statusCode: 400, headers, body: JSON.stringify({ message: 'Name, email, and message are required.' }) };
+  }
+  if (!isValidEmail(email)) {
+    return { statusCode: 400, headers, body: JSON.stringify({ message: 'Please provide a valid email address.' }) };
+  }
 
-    if (!isValidEmail(email)) {
-      return {
-        statusCode: 400,
-        headers,
-        body: JSON.stringify({ message: 'Please provide a valid email address.' }),
-      };
-    }
+  const apiKey = process.env.RESEND_API_KEY;
+  const toEmail = process.env.CONTACT_TO_EMAIL;
+  const fromEmail = process.env.CONTACT_FROM_EMAIL || 'ANTSAR Contact <onboarding@resend.dev>';
 
-    const apiKey = process.env.RESEND_API_KEY;
-    const toEmail = process.env.CONTACT_TO_EMAIL;
-    const fromEmail = process.env.CONTACT_FROM_EMAIL || 'ANTSAR Contact <onboarding@resend.dev>';
+  if (!apiKey || !toEmail) {
+    return { statusCode: 500, headers, body: JSON.stringify({ message: 'Email service is not configured on the server.' }) };
+  }
 
-    if (!apiKey || !toEmail) {
-      return {
-        statusCode: 500,
-        headers,
-        body: JSON.stringify({ message: 'Email service is not configured on the server.' }),
-      };
-    }
-
-    const emailResponse = await fetch('https://api.resend.com/emails', {
+  let emailResponse;
+  try {
+    emailResponse = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${apiKey}`,
@@ -69,27 +54,33 @@ export async function handler(event) {
         text: `New contact form submission\n\nName: ${name}\nEmail: ${email}\nSubject: ${subject || 'N/A'}\n\nMessage:\n${message}`,
       }),
     });
-
-    const emailPayload = await emailResponse.json();
-
-    if (!emailResponse.ok) {
-      return {
-        statusCode: 502,
-        headers,
-        body: JSON.stringify({ message: 'Email provider rejected the request.', details: emailPayload }),
-      };
-    }
-
+  } catch (err) {
     return {
-      statusCode: 200,
+      statusCode: 502,
       headers,
-      body: JSON.stringify({ ok: true, id: emailPayload.id }),
-    };
-  } catch {
-    return {
-      statusCode: 500,
-      headers,
-      body: JSON.stringify({ message: 'Unexpected error while sending email.' }),
+      body: JSON.stringify({ message: `Could not reach email service: ${err.message}` }),
     };
   }
+
+  let emailPayload = {};
+  try {
+    emailPayload = await emailResponse.json();
+  } catch {
+    // Resend returned non-JSON — still check status
+  }
+
+  if (!emailResponse.ok) {
+    const reason = emailPayload?.message || emailPayload?.name || `HTTP ${emailResponse.status}`;
+    return {
+      statusCode: 502,
+      headers,
+      body: JSON.stringify({ message: `Email provider error: ${reason}` }),
+    };
+  }
+
+  return {
+    statusCode: 200,
+    headers,
+    body: JSON.stringify({ ok: true, id: emailPayload.id }),
+  };
 }
