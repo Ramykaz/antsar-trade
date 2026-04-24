@@ -4,13 +4,14 @@ const Terms = () => {
   return (
     <div className={styles.terms}>
       <div className={styles.container}>
+        <p className={styles.eyebrow}>LEGAL</p>
         <h1>Terms of Service</h1>
         <div className={styles.content}>
 
           <section className={styles.section}>
             <h2>1. Agreement to Terms</h2>
             <p>
-              By accessing and using ANTSAR Foreign Trade Agency's services, you agree to be bound by these Terms of Service and all applicable laws and regulations.
+              By accessing and using ANTSAR Foreign Trade Agency services, you agree to these Terms of Service and applicable laws.
             </p>
           </section>
 
@@ -55,14 +56,14 @@ const Terms = () => {
           <section className={styles.section}>
             <h2>7. Governing Law</h2>
             <p>
-              These terms are governed by the laws of Turkey. Any disputes shall be resolved through arbitration in Istanbul.
+              These terms are governed by the laws of Turkey. Disputes are resolved through arbitration in Istanbul unless otherwise agreed in writing.
             </p>
           </section>
 
           <section className={styles.section}>
             <h2>8. Contact Information</h2>
             <p>
-              For questions about these Terms, contact us at:<br />
+              For questions regarding these terms, contact us at:<br />
               Email: antsartrade@gmail.com<br />
               Phone: +905056780600
             </p>

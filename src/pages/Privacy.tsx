@@ -4,13 +4,14 @@ const Privacy = () => {
   return (
     <div className={styles.privacy}>
       <div className={styles.container}>
+        <p className={styles.eyebrow}>LEGAL</p>
         <h1>Privacy Policy</h1>
         <div className={styles.content}>
 
           <section className={styles.section}>
             <h2>1. Information We Collect</h2>
             <p>
-              We collect information you provide directly, including business contact details, trade requirements, and communication records.
+              We collect details you provide directly, including business contact information, trade requirements, and communication records.
             </p>
           </section>
 
@@ -27,7 +28,7 @@ const Privacy = () => {
           <section className={styles.section}>
             <h2>3. Information Sharing</h2>
             <p>
-              We do not sell your data. We may share information with logistics partners and regulatory bodies only as necessary for trade operations.
+              We do not sell your data. We may share details with logistics partners and regulators only where required for service execution.
             </p>
           </section>
 

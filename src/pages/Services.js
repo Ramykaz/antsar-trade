@@ -2,99 +2,65 @@ import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { FaExchangeAlt, FaSearchLocation, FaShippingFast, FaFileContract, FaChartBar, FaSeedling, FaHardHat, FaTshirt, FaWineBottle, } from "react-icons/fa";
+import { FaExchangeAlt, FaSearchLocation, FaShippingFast, FaFileContract, FaChartBar, FaSeedling, FaHardHat, FaTshirt, FaWineBottle, FaGem, } from "react-icons/fa";
+import { FiArrowRight } from "react-icons/fi";
+import { Link } from "react-router-dom";
 import styles from "./Services.module.css";
 import servicesHero from "../assets/services-hero.webp";
-// Import your images for Core Services here:
 import impExpImg from "../assets/import-export.webp";
 import strategicSourcingImg from "../assets/strategic-sourcing.webp";
 import logisticsImg from "../assets/logistics.webp";
 import customsImg from "../assets/customs.webp";
 import marketIntelImg from "../assets/market-intelligence.webp";
+import { useLanguage } from "../LanguageContext";
+const serviceIcons = [
+    _jsx(FaExchangeAlt, {}),
+    _jsx(FaSearchLocation, {}),
+    _jsx(FaShippingFast, {}),
+    _jsx(FaFileContract, {}),
+    _jsx(FaChartBar, {}),
+];
+const serviceImages = [
+    impExpImg,
+    strategicSourcingImg,
+    logisticsImg,
+    customsImg,
+    marketIntelImg,
+];
+const industryIcons = [
+    _jsx(FaSeedling, {}),
+    _jsx(FaHardHat, {}),
+    _jsx(FaTshirt, {}),
+    _jsx(FaWineBottle, {}),
+    _jsx(FaGem, {}),
+];
+const industryImages = [
+    "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80",
+    "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=800&q=80",
+    "https://images.unsplash.com/photo-1558769132-cb1aea458c5e?auto=format&fit=crop&w=800&q=80",
+    "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=800&q=80",
+    // Cargo ship at a major port — Turkey–Africa maritime trade route context
+    "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&w=800&q=80",
+];
 const Services = () => {
-    const services = [
-        {
-            icon: _jsx(FaExchangeAlt, { className: styles.serviceIcon }),
-            title: "Import/Export Management",
-            description: "End-to-end oversight of cross-border transactions with comprehensive documentation handling and compliance assurance.",
-            image: impExpImg,
-        },
-        {
-            icon: _jsx(FaSearchLocation, { className: styles.serviceIcon }),
-            title: "Strategic Sourcing",
-            description: "Identification and vetting of premium global suppliers with negotiated contractual terms for optimal value.",
-            image: strategicSourcingImg,
-        },
-        {
-            icon: _jsx(FaShippingFast, { className: styles.serviceIcon }),
-            title: "Logistics Coordination",
-            description: "Seamless multimodal transportation solutions with real-time shipment tracking and customs management.",
-            image: logisticsImg,
-        },
-        {
-            icon: _jsx(FaFileContract, { className: styles.serviceIcon }),
-            title: "Customs Compliance",
-            description: "Expert navigation of tariff classifications, trade regulations, and duty optimization strategies.",
-            image: customsImg,
-        },
-        {
-            icon: _jsx(FaChartBar, { className: styles.serviceIcon }),
-            title: "Market Intelligence",
-            description: "Data-driven insights on emerging markets, competitive landscapes, and optimal entry strategies.",
-            image: marketIntelImg,
-        },
-    ];
-    const industries = [
-        {
-            title: "Agriculture",
-            items: ["Coffee & Tea", "Spices & Herbs", "Oilseeds", "Grains & Pulses", "Horticulture"],
-            icon: _jsx(FaSeedling, { className: styles.industryIcon }),
-            image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80",
-        },
-        {
-            title: "Construction",
-            items: [
-                "Structural Steel",
-                "Cement & Aggregates",
-                "Ceramic Tiles",
-                "Plumbing Fixtures",
-                "Electrical Components",
-            ],
-            icon: _jsx(FaHardHat, { className: styles.industryIcon }),
-            image: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=800&q=80",
-        },
-        {
-            title: "Textiles",
-            items: ["Apparel & Garments", "Home Textiles", "Technical Fabrics", "Accessories", "Footwear"],
-            icon: _jsx(FaTshirt, { className: styles.industryIcon }),
-            image: "https://images.unsplash.com/photo-1521334884684-d80222895322?auto=format&fit=crop&w=800&q=80",
-        },
-        {
-            title: "Food & Beverage",
-            items: ["Processed Foods", "Beverages", "Spices & Condiments", "Confectionery", "Dairy Products"],
-            icon: _jsx(FaWineBottle, { className: styles.industryIcon }),
-            image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80",
-        },
-    ];
+    const { t } = useLanguage();
     const sliderSettings = {
         dots: true,
         infinite: true,
         speed: 600,
         slidesToShow: 3,
         slidesToScroll: 1,
+        initialSlide: 0,
         responsive: [
-            {
-                breakpoint: 1024,
-                settings: { slidesToShow: 2 },
-            },
-            {
-                breakpoint: 600,
-                settings: { slidesToShow: 1 },
-            },
+            { breakpoint: 1100, settings: { slidesToShow: 2, slidesToScroll: 1 } },
+            { breakpoint: 720, settings: { slidesToShow: 1, slidesToScroll: 1, arrows: false } },
         ],
         arrows: true,
-        autoplay: false,
+        autoplay: true,
+        autoplaySpeed: 4000,
+        cssEase: "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+        pauseOnHover: true,
     };
-    return (_jsxs("div", { className: styles.servicesPage, children: [_jsxs("section", { className: styles.hero, children: [_jsx("div", { className: styles.heroOverlay }), _jsx("img", { src: servicesHero, alt: "Global Trade Services", className: styles.heroImage, loading: "lazy", decoding: "async" }), _jsxs("div", { className: styles.heroContent, children: [_jsx("h1", { children: "Our Trade Solutions" }), _jsx("p", { children: "Comprehensive services designed for seamless international commerce" })] })] }), _jsx("section", { className: styles.sectionLight, children: _jsxs("div", { className: styles.container, children: [_jsxs("div", { className: styles.sectionHeader, children: [_jsx("h2", { className: styles.sectionTitle, children: "Core Services" }), _jsx("p", { className: styles.sectionSubtitle, children: "Tailored solutions for your global trade requirements" })] }), _jsx("div", { className: styles.servicesGrid, children: services.map((service, idx) => (_jsx("div", { className: styles.flipCard, children: _jsxs("div", { className: styles.flipCardInner, children: [_jsx("div", { className: styles.flipCardFront, style: { backgroundImage: `url(${service.image})` } }), _jsxs("div", { className: styles.flipCardBack, children: [_jsx("div", { className: styles.iconContainer, children: service.icon }), _jsx("h3", { children: service.title }), _jsx("p", { children: service.description })] })] }) }, idx))) })] }) }), _jsx("section", { className: styles.sectionDark, children: _jsxs("div", { className: styles.container, children: [_jsxs("div", { className: styles.sectionHeader, children: [_jsx("h2", { className: styles.sectionTitle, children: "Industry Expertise" }), _jsx("p", { className: styles.sectionSubtitle, children: "Sectors where we deliver exceptional results" })] }), _jsx(Slider, { ...sliderSettings, className: styles.industriesSlider, children: industries.map((industry, idx) => (_jsx("div", { className: styles.industrySlide, children: _jsxs("div", { className: styles.industryImage, style: { backgroundImage: `url(${industry.image})` }, children: [_jsx("div", { className: styles.industryOverlay }), _jsxs("div", { className: styles.industryContent, children: [_jsx("div", { className: styles.industryIconContainer, children: industry.icon }), _jsx("h3", { children: industry.title }), _jsx("ul", { className: styles.industryList, children: industry.items.map((item, i) => (_jsxs("li", { children: [_jsx("span", { className: styles.bullet }), item] }, i))) })] })] }) }, idx))) })] }) })] }));
+    return (_jsxs("div", { className: styles.servicesPage, children: [_jsxs("section", { className: styles.hero, children: [_jsx("div", { className: styles.heroOverlay }), _jsx("img", { src: servicesHero, alt: "Global Trade Services", className: styles.heroImage, loading: "lazy", decoding: "async" }), _jsxs("div", { className: styles.heroContent, children: [_jsx("p", { className: styles.eyebrow, children: t.services.eyebrow }), _jsx("h1", { children: t.services.heroTitle }), _jsx("p", { children: t.services.heroSubtitle })] })] }), _jsx("section", { className: styles.sectionLight, children: _jsxs("div", { className: styles.container, children: [_jsxs("div", { className: styles.sectionHeader, children: [_jsx("p", { className: styles.sectionEyebrow, children: t.services.coreEyebrow }), _jsx("h2", { className: styles.sectionTitle, children: t.services.coreTitle }), _jsx("p", { className: styles.sectionSubtitle, children: t.services.coreSubtitle })] }), _jsx("div", { className: styles.servicesGrid, children: t.services.services.map((service, idx) => (_jsxs("div", { className: styles.serviceCard, children: [_jsx("span", { className: styles.cardAccent }), _jsx("div", { className: styles.serviceImage, style: { backgroundImage: `url(${serviceImages[idx]})` }, children: _jsx("div", { className: styles.serviceImageOverlay }) }), _jsxs("div", { className: styles.serviceContent, children: [_jsx("div", { className: styles.iconContainer, children: serviceIcons[idx] }), _jsx("h3", { children: service.title }), _jsx("p", { children: service.description }), _jsx("span", { className: styles.cardArrow, children: _jsx(FiArrowRight, {}) })] })] }, idx))) })] }) }), _jsx("section", { className: styles.sectionDark, children: _jsxs("div", { className: styles.container, children: [_jsxs("div", { className: styles.sectionHeader, children: [_jsx("p", { className: styles.sectionEyebrow, children: t.services.industryEyebrow }), _jsx("h2", { className: styles.sectionTitle, children: t.services.industryTitle }), _jsx("p", { className: styles.sectionSubtitle, children: t.services.industrySubtitle })] }), _jsx(Slider, { ...sliderSettings, className: styles.industriesSlider, children: t.services.industries.map((industry, idx) => (_jsx("div", { className: styles.industrySlide, children: _jsxs("div", { className: styles.industryCard, children: [_jsx("div", { className: styles.industryBg, style: { backgroundImage: `url(${industryImages[idx]})` } }), _jsx("div", { className: styles.industryOverlay }), _jsxs("span", { className: styles.industryNumber, children: ["0", idx + 1] }), _jsxs("div", { className: styles.industryContent, children: [_jsx("div", { className: styles.industryIconWrap, children: industryIcons[idx] }), _jsx("h3", { children: industry.title }), _jsx("div", { className: styles.industryDivider }), _jsx("div", { className: styles.industryTags, children: industry.items.map((item, i) => (_jsx("span", { className: styles.industryTag, children: item }, i))) })] })] }) }, idx))) })] }) }), _jsx("section", { className: styles.processSection, children: _jsxs("div", { className: styles.container, children: [_jsxs("div", { className: styles.sectionHeader, children: [_jsx("p", { className: styles.sectionEyebrow, children: t.services.processEyebrow }), _jsx("h2", { className: styles.sectionTitle, children: t.services.processTitle }), _jsx("p", { className: styles.sectionSubtitle, children: t.services.processSubtitle })] }), _jsx("div", { className: styles.processGrid, children: t.services.steps.map((p, i) => (_jsxs("div", { className: styles.processStep, children: [_jsxs("span", { className: styles.stepNumber, children: ["0", i + 1] }), _jsx("h3", { children: p.title }), _jsx("p", { children: p.desc })] }, i))) })] }) }), _jsx("section", { className: styles.ctaSection, children: _jsx("div", { className: styles.container, children: _jsxs("div", { className: styles.ctaInner, children: [_jsx("h2", { children: t.services.ctaTitle }), _jsx("p", { children: t.services.ctaText }), _jsxs(Link, { to: "/contact", className: styles.ctaButton, children: [t.services.ctaBtn, " ", _jsx(FiArrowRight, {})] })] }) }) })] }));
 };
 export default Services;

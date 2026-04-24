@@ -1,19 +1,12 @@
 [build]
   publish = "dist"
   command = "npm run build"
+  functions = "netlify/functions"
 
-# Fix redirect loop - only redirect non-asset paths
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
-  conditions = {Language = ["en"], Country = ["US"]}
-
-# Explicit HTTPS redirect (remove if causing issues)
-[[redirects]]
-  from = "http://antsartrade.com/*"
-  to = "https://antsartrade.com/:splat"
-  status = 301
 
 [[headers]]
   for = "/*"
