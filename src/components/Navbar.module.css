@@ -37,14 +37,6 @@
   align-items: center;
   flex-shrink: 0;
   order: 2;
-  background: rgba(255, 255, 255, 0.93);
-  border-radius: 8px;
-  padding: 5px 10px;
-  transition: background 0.22s ease;
-}
-
-.logoLink:hover {
-  background: rgba(255, 255, 255, 1);
 }
 
 .logo {
@@ -52,6 +44,13 @@
   width: auto;
   object-fit: contain;
   display: block;
+  filter: invert(1);
+  transition: filter 0.22s ease;
+}
+
+/* Light mode + scrolled: navbar is light-coloured, so use dark logo */
+:global([data-theme="light"]) .scrolled .logo {
+  filter: invert(0);
 }
 
 /* ── Desktop nav — left side ───────────── */
@@ -227,10 +226,6 @@
     width: auto;
   }
 
-  .logoLink {
-    padding: 4px 8px;
-  }
-
   .mobileMenu {
     top: 64px;
   }
@@ -244,10 +239,6 @@
   .logo {
     height: 32px;
     width: auto;
-  }
-
-  .logoLink {
-    padding: 3px 7px;
   }
 
   .mobileMenu {
