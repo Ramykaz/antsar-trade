@@ -25,16 +25,9 @@
 }
 
 .logo {
-  width: 54px;
-  height: 54px;
-  border-radius: 10px;
+  width: 72px;
+  height: 72px;
   object-fit: contain;
-  background: #ffffff;
-  padding: 5px;
-  border: 1.5px solid rgba(var(--brand-rgb), 0.55);
-  box-shadow:
-    0 4px 16px rgba(0, 0, 0, 0.22),
-    0 0 0 3px rgba(var(--brand-rgb), 0.1);
 }
 
 .brandText {
@@ -202,8 +195,8 @@
   }
 
   .logo {
-    width: 46px;
-    height: 46px;
+    width: 58px;
+    height: 58px;
   }
 
   .brandText {
