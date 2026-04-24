@@ -27,7 +27,6 @@ const Navbar = ({ theme, onToggleTheme }: NavbarProps) => {
       <div className={styles.container}>
         <Link to="/" className={styles.logoLink}>
           <img src={logo} alt="ANTSAR Logo" className={styles.logo} />
-          <span className={styles.brandText}>ANTSAR</span>
         </Link>
 
         <div className={styles.desktopMenu}>
