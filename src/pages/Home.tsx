@@ -1,4 +1,3 @@
-// pages/Home.tsx
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Home.module.css';
@@ -13,62 +12,59 @@ import {
   FiHome
 } from 'react-icons/fi';
 import heroImage from '../assets/hero-image.webp';
+import { useLanguage } from '../LanguageContext';
 
-interface CardItem {
-  title: string;
-  icon: React.ReactNode;
-  description: string;
-}
-
-const industries: CardItem[] = [
-  { title: "Agriculture", icon: <FiCoffee />, description: "Premium sourcing of coffee, spices, and agricultural commodities" },
-  { title: "Construction", icon: <FiHome />, description: "Building materials and industrial supplies" },
-  { title: "Textiles", icon: <FiShoppingBag />, description: "Quality garment manufacturing connections" },
-  { title: "Commodities", icon: <FiBox />, description: "Bulk trading with transparent pricing" }
-];
-
-const services: CardItem[] = [
-  { title: "Market Entry", icon: <FiGlobe />, description: "Strategic guidance for expanding into new territories" },
-  { title: "Commodity Trading", icon: <FiTrendingUp />, description: "Reliable sourcing and distribution networks" },
-  { title: "Risk Management", icon: <FiShield />, description: "Protecting your interests in volatile markets" },
-  { title: "Logistics Strategy", icon: <FiCompass />, description: "Optimized supply chain solutions" }
-];
+const serviceIcons = [<FiGlobe />, <FiTrendingUp />, <FiShield />, <FiCompass />];
+const industryIcons = [<FiCoffee />, <FiHome />, <FiShoppingBag />, <FiBox />];
 
 const Home: React.FC = () => {
+  const { t } = useLanguage();
+
   return (
     <div className={styles.home}>
-      {/* Hero Section */}
       <section className={styles.hero}>
-      <img
-        src={heroImage}
-        alt="Home hero"
-        className={styles.heroImage}
-        loading="lazy"
-        decoding="async"
-      />
+        <img
+          src={heroImage}
+          alt="Home hero"
+          className={styles.heroImage}
+          loading="lazy"
+          decoding="async"
+        />
         <div className={styles.heroOverlay}></div>
         <div className={styles.heroContent}>
-          <h1 className={styles.logo}>
-            Antsar <span>Foreign Trade Agency</span>
-          </h1>
-          <p className={styles.tagline}>Where Precision Meets Global Opportunity</p>
+          <p className={styles.eyebrow}>{t.home.eyebrow}</p>
+          <h1 className={styles.logo}>{t.home.heroTitle}</h1>
+          <p className={styles.tagline}>{t.home.heroTagline}</p>
           <div className={styles.ctaGroup}>
-            <Link to="/services" className={styles.primaryCta}>Explore Services</Link>
-            <Link to="/contact" className={styles.secondaryCta}>Contact Us</Link>
+            <Link to="/services" className={styles.primaryCta}>{t.home.ctaPrimary}</Link>
+            <Link to="/contact" className={styles.secondaryCta}>{t.home.ctaSecondary}</Link>
+          </div>
+          <div className={styles.statsRow}>
+            <article>
+              <h3>{t.home.stat1Val}</h3>
+              <p>{t.home.stat1Label}</p>
+            </article>
+            <article>
+              <h3>{t.home.stat2Val}</h3>
+              <p>{t.home.stat2Label}</p>
+            </article>
+            <article>
+              <h3>{t.home.stat3Val}</h3>
+              <p>{t.home.stat3Label}</p>
+            </article>
           </div>
         </div>
       </section>
 
-      {/* Services Section */}
       <section className={styles.section}>
         <div className={styles.sectionHeader}>
-          <h2>Tailored Trade Solutions</h2>
-          <p>Comprehensive services for seamless cross-border commerce</p>
+          <h2>{t.home.servicesSectionTitle}</h2>
+          <p>{t.home.servicesSectionSubtitle}</p>
         </div>
         <div className={styles.grid}>
-          {services.map((service, index) => (
+          {t.home.services.map((service, index) => (
             <div key={index} className={styles.card}>
-              <div className={styles.iconWrapper}>{service.icon}</div>
+              <div className={styles.iconWrapper}>{serviceIcons[index]}</div>
               <h3>{service.title}</h3>
               <p>{service.description}</p>
             </div>
@@ -76,20 +72,27 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Industries Section */}
       <section className={`${styles.section} ${styles.altSection}`}>
         <div className={styles.sectionHeader}>
-          <h2>Industry Expertise</h2>
-          <p>Sectors where we deliver exceptional results</p>
+          <h2>{t.home.industriesSectionTitle}</h2>
+          <p>{t.home.industriesSectionSubtitle}</p>
         </div>
         <div className={styles.grid}>
-          {industries.map((industry, index) => (
+          {t.home.industries.map((industry, index) => (
             <div key={index} className={styles.card}>
-              <div className={styles.iconWrapper}>{industry.icon}</div>
+              <div className={styles.iconWrapper}>{industryIcons[index]}</div>
               <h3>{industry.title}</h3>
               <p>{industry.description}</p>
             </div>
           ))}
+        </div>
+      </section>
+
+      <section className={styles.bottomCta}>
+        <div className={styles.bottomInner}>
+          <h2>{t.home.bottomTitle}</h2>
+          <p>{t.home.bottomText}</p>
+          <Link to="/contact" className={styles.primaryCta}>{t.home.bottomBtn}</Link>
         </div>
       </section>
     </div>

@@ -1,29 +1,35 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { FaBars, FaTimes } from 'react-icons/fa';
-import logo from '../assets/ss.jpg';
+import { FaBars, FaTimes, FaSun, FaMoon } from 'react-icons/fa';
+import logo from '../assets/logo.png';
 import styles from './Navbar.module.css';
+import { useLanguage } from '../LanguageContext';
 
-const Navbar = () => {
+interface NavbarProps {
+  theme: 'dark' | 'light';
+  onToggleTheme: () => void;
+}
+
+const Navbar = ({ theme, onToggleTheme }: NavbarProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const { lang, toggleLang, t } = useLanguage();
 
   const navItems = [
-    { path: '/', name: 'Home' },
-    { path: '/services', name: 'Services' },
-    { path: '/about', name: 'About' },
-    { path: '/contact', name: 'Contact' }
+    { path: '/', name: t.nav.home },
+    { path: '/services', name: t.nav.services },
+    { path: '/about', name: t.nav.about },
+    { path: '/contact', name: t.nav.contact },
   ];
 
   return (
     <nav className={styles.navbar}>
       <div className={styles.container}>
-        {/* Logo */}
         <Link to="/" className={styles.logoLink}>
           <img src={logo} alt="ANTSAR Logo" className={styles.logo} />
+          <span className={styles.brandText}>ANTSAR</span>
         </Link>
 
-        {/* Desktop Menu */}
         <div className={styles.desktopMenu}>
           {navItems.map(({ path, name }) => (
             <Link
@@ -34,18 +40,46 @@ const Navbar = () => {
               {name}
             </Link>
           ))}
+          <button
+            className={styles.langToggle}
+            onClick={toggleLang}
+            aria-label={`Switch to ${lang === 'en' ? 'Turkish' : 'English'}`}
+          >
+            {lang === 'en' ? 'TR' : 'EN'}
+          </button>
+          <button
+            className={styles.themeToggle}
+            onClick={onToggleTheme}
+            aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+          >
+            {theme === 'dark' ? <FaSun /> : <FaMoon />}
+          </button>
         </div>
 
-        {/* Mobile Menu Button */}
-        <button
-          className={styles.mobileMenuButton}
-          onClick={() => setIsOpen((prev) => !prev)}
-          aria-label="Toggle navigation"
-        >
-          {isOpen ? <FaTimes /> : <FaBars />}
-        </button>
+        <div className={styles.mobileActions}>
+          <button
+            className={styles.langToggle}
+            onClick={toggleLang}
+            aria-label={`Switch to ${lang === 'en' ? 'Turkish' : 'English'}`}
+          >
+            {lang === 'en' ? 'TR' : 'EN'}
+          </button>
+          <button
+            className={styles.themeToggle}
+            onClick={onToggleTheme}
+            aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+          >
+            {theme === 'dark' ? <FaSun /> : <FaMoon />}
+          </button>
+          <button
+            className={styles.mobileMenuButton}
+            onClick={() => setIsOpen(prev => !prev)}
+            aria-label="Toggle navigation"
+          >
+            {isOpen ? <FaTimes /> : <FaBars />}
+          </button>
+        </div>
 
-        {/* Mobile Menu */}
         <div className={`${styles.mobileMenu} ${isOpen ? styles.open : ''}`}>
           {navItems.map(({ path, name }) => (
             <Link

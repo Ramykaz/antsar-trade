@@ -2,11 +2,9 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import type { ChangeEvent, KeyboardEvent, FormEvent } from 'react';
 import { FaWhatsapp, FaEnvelope, FaPhone, FaPaperPlane } from 'react-icons/fa';
 import styles from './Contact.module.css';
-
-// If you don't have a *.jpg module declaration, keep this ts-ignore.
-// Better: add in src/declarations.d.ts: `declare module '*.jpg';`
 // @ts-ignore
 import contactHero from '../assets/contact-hero.webp';
+import { useLanguage } from '../LanguageContext';
 
 type FormState = {
   name: string;
@@ -15,7 +13,6 @@ type FormState = {
   message: string;
 };
 
-// Contact Info
 const COMPANY_NAME = 'ANTSAR Foreign Trade';
 const EMAIL = 'antsartrade@gmail.com';
 const PHONE_E164 = '+905056780600';
@@ -24,6 +21,7 @@ const WA_NUMBER = '905056780600';
 const WA_BASE_URL = `https://wa.me/${WA_NUMBER}`;
 
 function Contact() {
+  const { t } = useLanguage();
   const formRef = useRef<HTMLFormElement>(null);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -36,7 +34,6 @@ function Contact() {
     message: '',
   });
 
-  // Prefill message for WhatsApp
   const waPrefill = useMemo(() => {
     const lines = [
       `Hello ${COMPANY_NAME},`,
@@ -53,7 +50,6 @@ function Contact() {
     )}`;
   }, [formData]);
 
-  // Auto-hide success after a few seconds
   useEffect(() => {
     if (!submitSuccess) return;
     const timer = setTimeout(() => setSubmitSuccess(false), 4000);
@@ -78,21 +74,20 @@ function Contact() {
 
   const validateForm = () => {
     if (!formData.name || !formData.email || !formData.message) {
-      setSubmitError('Please fill all required fields.');
+      setSubmitError(t.contact.errorRequired);
       return false;
     }
     if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      setSubmitError('Please enter a valid email address.');
+      setSubmitError(t.contact.errorEmail);
       return false;
     }
     if (formData.message.trim().length < 10) {
-      setSubmitError('Message should be at least 10 characters.');
+      setSubmitError(t.contact.errorShortMessage);
       return false;
     }
     return true;
   };
 
-  // No EmailJS: we just validate and show success (or suggest WhatsApp)
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSubmitError(null);
@@ -101,12 +96,24 @@ function Contact() {
 
     setIsSubmitting(true);
     try {
-      // Simulate a successful send (no external service)
+      const response = await fetch('/.netlify/functions/send-contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        throw new Error(data?.message || t.contact.errorGeneric);
+      }
+
       setSubmitSuccess(true);
       formRef.current?.reset();
       setFormData({ name: '', email: '', subject: '', message: '' });
-    } catch (err) {
-      setSubmitError('Failed to send message. Please try WhatsApp for immediate assistance.');
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : t.contact.errorGeneric;
+      setSubmitError(message);
     } finally {
       setIsSubmitting(false);
     }
@@ -115,18 +122,18 @@ function Contact() {
   return (
     <div className={styles.contactPage}>
       <section className={styles.hero} aria-label="Contact hero">
-      <img
-        src={contactHero}
-        alt="Contact our international trade experts"
-        className={styles.heroImage}
-        loading="lazy"
-        decoding="async"
-      />
+        <img
+          src={contactHero}
+          alt="Contact our international trade experts"
+          className={styles.heroImage}
+          loading="lazy"
+          decoding="async"
+        />
         <div className={styles.heroOverlay} aria-hidden />
 
         <div className={styles.heroContent}>
-          <h1>Connect With Us</h1>
-          <p>Our team is ready to assist with your international trade inquiries.</p>
+          <h1>{t.contact.heroTitle}</h1>
+          <p>{t.contact.heroSubtitle}</p>
 
           <div className={styles.quickLinks} role="group" aria-label="Quick contact links">
             <a className={styles.quickLink} href={`mailto:${EMAIL}`} aria-label="Email us">
@@ -136,7 +143,7 @@ function Contact() {
               <FaPhone /> {PHONE_DISPLAY}
             </a>
             <a className={styles.quickLink} href={waPrefill} target="_blank" rel="noreferrer" aria-label="WhatsApp">
-              <FaWhatsapp /> WhatsApp Us
+              <FaWhatsapp /> {t.contact.quickWhatsApp}
             </a>
           </div>
         </div>
@@ -145,14 +152,12 @@ function Contact() {
       <section className={styles.contactContent}>
         <div className={styles.container}>
           <div className={styles.formSection}>
-            <h2 className={styles.sectionTitle}>Send Us a Message</h2>
-            <p className={styles.formSubtitle}>
-              We respond within 1 business day. For urgent matters, use WhatsApp.
-            </p>
+            <h2 className={styles.sectionTitle}>{t.contact.formTitle}</h2>
+            <p className={styles.formSubtitle}>{t.contact.formSubtitle}</p>
 
             <form ref={formRef} onSubmit={handleSubmit} className={styles.contactForm}>
               <div className={styles.formGroup}>
-                <label htmlFor="name">Your Name*</label>
+                <label htmlFor="name">{t.contact.labelName}</label>
                 <input
                   type="text"
                   id="name"
@@ -160,13 +165,13 @@ function Contact() {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  placeholder="John Doe"
+                  placeholder={t.contact.placeholderName}
                   autoComplete="name"
                 />
               </div>
 
               <div className={styles.formGroup}>
-                <label htmlFor="email">Email*</label>
+                <label htmlFor="email">{t.contact.labelEmail}</label>
                 <input
                   type="email"
                   id="email"
@@ -174,25 +179,25 @@ function Contact() {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  placeholder="john@company.com"
+                  placeholder={t.contact.placeholderEmail}
                   autoComplete="email"
                 />
               </div>
 
               <div className={styles.formGroup}>
-                <label htmlFor="subject">Subject</label>
+                <label htmlFor="subject">{t.contact.labelSubject}</label>
                 <input
                   type="text"
                   id="subject"
                   name="subject"
                   value={formData.subject}
                   onChange={handleChange}
-                  placeholder="Regarding import/export"
+                  placeholder={t.contact.placeholderSubject}
                 />
               </div>
 
               <div className={styles.formGroup}>
-                <label htmlFor="message">Message*</label>
+                <label htmlFor="message">{t.contact.labelMessage}</label>
                 <textarea
                   id="message"
                   name="message"
@@ -201,16 +206,14 @@ function Contact() {
                   onKeyDown={handleKeyDown}
                   rows={6}
                   required
-                  placeholder="Your trade inquiry details"
+                  placeholder={t.contact.placeholderMessage}
                 />
               </div>
 
               <div className={styles.formActions}>
                 <button type="submit" className={styles.submitButton} disabled={isSubmitting}>
-                  {isSubmitting ? 'Sending...' : (
-                    <>
-                      <FaPaperPlane /> Send Message
-                    </>
+                  {isSubmitting ? t.contact.btnSending : (
+                    <><FaPaperPlane /> {t.contact.btnSubmit}</>
                   )}
                 </button>
                 <button
@@ -218,7 +221,7 @@ function Contact() {
                   className={styles.whatsappCTA}
                   onClick={handleWhatsAppClick}
                 >
-                  <FaWhatsapp /> WhatsApp Us
+                  <FaWhatsapp /> {t.contact.btnWhatsApp}
                 </button>
               </div>
 
@@ -232,10 +235,10 @@ function Contact() {
                 <div className={styles.successMessage} role="status" aria-live="polite">
                   <div className={styles.successIcon}>✓</div>
                   <div>
-                    <h4>Message Sent!</h4>
-                    <p>We'll respond within 24 hours.</p>
+                    <h4>{t.contact.successTitle}</h4>
+                    <p>{t.contact.successText}</p>
                     <a className={styles.successWhatsApp} href={waPrefill} target="_blank" rel="noreferrer">
-                      <FaWhatsapp /> Continue on WhatsApp
+                      <FaWhatsapp /> {t.contact.successWhatsApp}
                     </a>
                   </div>
                 </div>
