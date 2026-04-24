@@ -7,7 +7,7 @@ export const LanguageProvider = ({ children }) => {
         return localStorage.getItem('antsar-lang') || 'en';
     });
     const toggleLang = () => setLang(l => {
-        const next = l === 'en' ? 'tr' : 'en';
+        const next = l === 'en' ? 'tr' : l === 'tr' ? 'am' : 'en';
         localStorage.setItem('antsar-lang', next);
         return next;
     });

@@ -1,4 +1,4 @@
-import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { FaWhatsapp, FaEnvelope, FaPhone, FaPaperPlane } from 'react-icons/fa';
 import styles from './Contact.module.css';
@@ -14,7 +14,6 @@ const WA_BASE_URL = `https://wa.me/${WA_NUMBER}`;
 function Contact() {
     const { t } = useLanguage();
     const formRef = useRef(null);
-    const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitSuccess, setSubmitSuccess] = useState(false);
     const [submitError, setSubmitError] = useState(null);
     const [formData, setFormData] = useState({
@@ -70,34 +69,18 @@ function Contact() {
         }
         return true;
     };
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         setSubmitError(null);
         if (!validateForm())
             return;
-        setIsSubmitting(true);
-        try {
-            const response = await fetch('/.netlify/functions/send-contact', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData),
-            });
-            const data = await response.json().catch(() => ({}));
-            if (!response.ok) {
-                throw new Error(data?.message || t.contact.errorGeneric);
-            }
-            setSubmitSuccess(true);
-            formRef.current?.reset();
-            setFormData({ name: '', email: '', subject: '', message: '' });
-        }
-        catch (err) {
-            const message = err instanceof Error ? err.message : t.contact.errorGeneric;
-            setSubmitError(message);
-        }
-        finally {
-            setIsSubmitting(false);
-        }
+        const subject = encodeURIComponent(formData.subject || `New inquiry from ${formData.name}`);
+        const body = encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\n\n${formData.message}`);
+        window.location.href = `mailto:${EMAIL}?subject=${subject}&body=${body}`;
+        setSubmitSuccess(true);
+        formRef.current?.reset();
+        setFormData({ name: '', email: '', subject: '', message: '' });
     };
-    return (_jsxs("div", { className: styles.contactPage, children: [_jsxs("section", { className: styles.hero, "aria-label": "Contact hero", children: [_jsx("img", { src: contactHero, alt: "Contact our international trade experts", className: styles.heroImage, loading: "lazy", decoding: "async" }), _jsx("div", { className: styles.heroOverlay, "aria-hidden": true }), _jsxs("div", { className: styles.heroContent, children: [_jsx("h1", { children: t.contact.heroTitle }), _jsx("p", { children: t.contact.heroSubtitle }), _jsxs("div", { className: styles.quickLinks, role: "group", "aria-label": "Quick contact links", children: [_jsxs("a", { className: styles.quickLink, href: `mailto:${EMAIL}`, "aria-label": "Email us", children: [_jsx(FaEnvelope, {}), " ", EMAIL] }), _jsxs("a", { className: styles.quickLink, href: `tel:${PHONE_E164}`, "aria-label": "Call us", children: [_jsx(FaPhone, {}), " ", PHONE_DISPLAY] }), _jsxs("a", { className: styles.quickLink, href: waPrefill, target: "_blank", rel: "noreferrer", "aria-label": "WhatsApp", children: [_jsx(FaWhatsapp, {}), " ", t.contact.quickWhatsApp] })] })] })] }), _jsx("section", { className: styles.contactContent, children: _jsx("div", { className: styles.container, children: _jsxs("div", { className: styles.formSection, children: [_jsx("h2", { className: styles.sectionTitle, children: t.contact.formTitle }), _jsx("p", { className: styles.formSubtitle, children: t.contact.formSubtitle }), _jsxs("form", { ref: formRef, onSubmit: handleSubmit, className: styles.contactForm, children: [_jsxs("div", { className: styles.formGroup, children: [_jsx("label", { htmlFor: "name", children: t.contact.labelName }), _jsx("input", { type: "text", id: "name", name: "name", value: formData.name, onChange: handleChange, required: true, placeholder: t.contact.placeholderName, autoComplete: "name" })] }), _jsxs("div", { className: styles.formGroup, children: [_jsx("label", { htmlFor: "email", children: t.contact.labelEmail }), _jsx("input", { type: "email", id: "email", name: "email", value: formData.email, onChange: handleChange, required: true, placeholder: t.contact.placeholderEmail, autoComplete: "email" })] }), _jsxs("div", { className: styles.formGroup, children: [_jsx("label", { htmlFor: "subject", children: t.contact.labelSubject }), _jsx("input", { type: "text", id: "subject", name: "subject", value: formData.subject, onChange: handleChange, placeholder: t.contact.placeholderSubject })] }), _jsxs("div", { className: styles.formGroup, children: [_jsx("label", { htmlFor: "message", children: t.contact.labelMessage }), _jsx("textarea", { id: "message", name: "message", value: formData.message, onChange: handleChange, onKeyDown: handleKeyDown, rows: 6, required: true, placeholder: t.contact.placeholderMessage })] }), _jsxs("div", { className: styles.formActions, children: [_jsx("button", { type: "submit", className: styles.submitButton, disabled: isSubmitting, children: isSubmitting ? t.contact.btnSending : (_jsxs(_Fragment, { children: [_jsx(FaPaperPlane, {}), " ", t.contact.btnSubmit] })) }), _jsxs("button", { type: "button", className: styles.whatsappCTA, onClick: handleWhatsAppClick, children: [_jsx(FaWhatsapp, {}), " ", t.contact.btnWhatsApp] })] }), submitError && (_jsx("div", { className: styles.errorMessage, role: "alert", "aria-live": "polite", children: submitError })), submitSuccess && (_jsxs("div", { className: styles.successMessage, role: "status", "aria-live": "polite", children: [_jsx("div", { className: styles.successIcon, children: "\u2713" }), _jsxs("div", { children: [_jsx("h4", { children: t.contact.successTitle }), _jsx("p", { children: t.contact.successText }), _jsxs("a", { className: styles.successWhatsApp, href: waPrefill, target: "_blank", rel: "noreferrer", children: [_jsx(FaWhatsapp, {}), " ", t.contact.successWhatsApp] })] })] }))] })] }) }) }), _jsxs("a", { href: `${WA_BASE_URL}?text=Hello%20${encodeURIComponent(COMPANY_NAME)}`, className: styles.whatsappFloat, target: "_blank", rel: "noreferrer", "aria-label": "WhatsApp", children: [_jsx(FaWhatsapp, {}), _jsx("span", { className: styles.tooltip, children: "Chat with us" })] })] }));
+    return (_jsxs("div", { className: styles.contactPage, children: [_jsxs("section", { className: styles.hero, "aria-label": "Contact hero", children: [_jsx("img", { src: contactHero, alt: "Contact our international trade experts", className: styles.heroImage, loading: "lazy", decoding: "async" }), _jsx("div", { className: styles.heroOverlay, "aria-hidden": true }), _jsxs("div", { className: styles.heroContent, children: [_jsx("h1", { children: t.contact.heroTitle }), _jsx("p", { children: t.contact.heroSubtitle }), _jsxs("div", { className: styles.quickLinks, role: "group", "aria-label": "Quick contact links", children: [_jsxs("a", { className: styles.quickLink, href: `mailto:${EMAIL}`, "aria-label": "Email us", children: [_jsx(FaEnvelope, {}), " ", EMAIL] }), _jsxs("a", { className: styles.quickLink, href: `tel:${PHONE_E164}`, "aria-label": "Call us", children: [_jsx(FaPhone, {}), " ", PHONE_DISPLAY] }), _jsxs("a", { className: styles.quickLink, href: waPrefill, target: "_blank", rel: "noreferrer", "aria-label": "WhatsApp", children: [_jsx(FaWhatsapp, {}), " ", t.contact.quickWhatsApp] })] })] })] }), _jsx("section", { className: styles.contactContent, children: _jsx("div", { className: styles.container, children: _jsxs("div", { className: styles.formSection, children: [_jsx("h2", { className: styles.sectionTitle, children: t.contact.formTitle }), _jsx("p", { className: styles.formSubtitle, children: t.contact.formSubtitle }), _jsxs("form", { ref: formRef, onSubmit: handleSubmit, className: styles.contactForm, children: [_jsxs("div", { className: styles.formGroup, children: [_jsx("label", { htmlFor: "name", children: t.contact.labelName }), _jsx("input", { type: "text", id: "name", name: "name", value: formData.name, onChange: handleChange, required: true, placeholder: t.contact.placeholderName, autoComplete: "name" })] }), _jsxs("div", { className: styles.formGroup, children: [_jsx("label", { htmlFor: "email", children: t.contact.labelEmail }), _jsx("input", { type: "email", id: "email", name: "email", value: formData.email, onChange: handleChange, required: true, placeholder: t.contact.placeholderEmail, autoComplete: "email" })] }), _jsxs("div", { className: styles.formGroup, children: [_jsx("label", { htmlFor: "subject", children: t.contact.labelSubject }), _jsx("input", { type: "text", id: "subject", name: "subject", value: formData.subject, onChange: handleChange, placeholder: t.contact.placeholderSubject })] }), _jsxs("div", { className: styles.formGroup, children: [_jsx("label", { htmlFor: "message", children: t.contact.labelMessage }), _jsx("textarea", { id: "message", name: "message", value: formData.message, onChange: handleChange, onKeyDown: handleKeyDown, rows: 6, required: true, placeholder: t.contact.placeholderMessage })] }), _jsxs("div", { className: styles.formActions, children: [_jsxs("button", { type: "submit", className: styles.submitButton, children: [_jsx(FaPaperPlane, {}), " ", t.contact.btnSubmit] }), _jsxs("button", { type: "button", className: styles.whatsappCTA, onClick: handleWhatsAppClick, children: [_jsx(FaWhatsapp, {}), " ", t.contact.btnWhatsApp] })] }), submitError && (_jsx("div", { className: styles.errorMessage, role: "alert", "aria-live": "polite", children: submitError })), submitSuccess && (_jsxs("div", { className: styles.successMessage, role: "status", "aria-live": "polite", children: [_jsx("div", { className: styles.successIcon, children: "\u2713" }), _jsxs("div", { children: [_jsx("h4", { children: t.contact.successTitle }), _jsx("p", { children: t.contact.successText }), _jsxs("a", { className: styles.successWhatsApp, href: waPrefill, target: "_blank", rel: "noreferrer", children: [_jsx(FaWhatsapp, {}), " ", t.contact.successWhatsApp] })] })] }))] })] }) }) }), _jsxs("a", { href: `${WA_BASE_URL}?text=Hello%20${encodeURIComponent(COMPANY_NAME)}`, className: styles.whatsappFloat, target: "_blank", rel: "noreferrer", "aria-label": "WhatsApp", children: [_jsx(FaWhatsapp, {}), _jsx("span", { className: styles.tooltip, children: "Chat with us" })] })] }));
 }
 export default Contact;

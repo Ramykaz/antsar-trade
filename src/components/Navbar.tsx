@@ -76,9 +76,9 @@ const Navbar = ({ theme, onToggleTheme }: NavbarProps) => {
           <button
             className={styles.langToggle}
             onClick={toggleLang}
-            aria-label={`Switch to ${lang === 'en' ? 'Turkish' : 'English'}`}
+            aria-label={`Switch language`}
           >
-            {lang === 'en' ? 'TR' : 'EN'}
+            {lang === 'en' ? 'TR' : lang === 'tr' ? 'አማ' : 'EN'}
           </button>
           <button
             className={styles.themeToggle}
@@ -94,9 +94,9 @@ const Navbar = ({ theme, onToggleTheme }: NavbarProps) => {
           <button
             className={styles.langToggle}
             onClick={toggleLang}
-            aria-label={`Switch to ${lang === 'en' ? 'Turkish' : 'English'}`}
+            aria-label={`Switch language`}
           >
-            {lang === 'en' ? 'TR' : 'EN'}
+            {lang === 'en' ? 'TR' : lang === 'tr' ? 'አማ' : 'EN'}
           </button>
           <button
             className={styles.themeToggle}

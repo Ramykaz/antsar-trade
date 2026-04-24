@@ -16,7 +16,7 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
 
   const toggleLang = () =>
     setLang(l => {
-      const next = l === 'en' ? 'tr' : 'en';
+      const next = l === 'en' ? 'tr' : l === 'tr' ? 'am' : 'en';
       localStorage.setItem('antsar-lang', next);
       return next;
     });

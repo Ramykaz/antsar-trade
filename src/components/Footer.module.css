@@ -181,10 +181,26 @@
 
 @media (max-width: 560px) {
   .footerGrid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem 0.75rem;
   }
 
   .footer {
     margin-top: 3rem;
+  }
+
+  .companyDescription {
+    font-size: 0.82rem;
+    max-width: 100%;
+  }
+
+  .columnTitle {
+    font-size: 0.75rem;
+    margin-bottom: 0.65rem;
+  }
+
+  .footerLinks a,
+  .contactInfo li {
+    font-size: 0.82rem;
   }
 }
