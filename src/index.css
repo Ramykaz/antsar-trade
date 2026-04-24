@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -105,7 +105,7 @@ body {
 
 /* ── Typography ───────────────────────────────── */
 h1, h2 {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Merriweather', Georgia, serif;
   line-height: 1.15;
   letter-spacing: 0.2px;
 }
