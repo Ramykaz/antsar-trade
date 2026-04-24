@@ -24,7 +24,7 @@
 .container {
   width: min(var(--content-width), 92vw);
   margin: 0 auto;
-  height: 68px;
+  height: 76px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -48,7 +48,7 @@
 }
 
 .logo {
-  height: 36px;
+  height: 52px;
   width: auto;
   object-fit: contain;
   display: block;
@@ -170,7 +170,7 @@
 /* ── Mobile dropdown ───────────────────── */
 .mobileMenu {
   position: fixed;
-  top: 68px;
+  top: 76px;
   left: 0;
   right: 0;
   padding: 0.9rem 4vw 1.2rem;
@@ -219,11 +219,11 @@
   }
 
   .container {
-    height: 58px;
+    height: 64px;
   }
 
   .logo {
-    height: 26px;
+    height: 38px;
     width: auto;
   }
 
@@ -232,25 +232,25 @@
   }
 
   .mobileMenu {
-    top: 58px;
+    top: 64px;
   }
 }
 
 @media (max-width: 480px) {
   .container {
-    height: 52px;
+    height: 58px;
   }
 
   .logo {
-    height: 22px;
+    height: 32px;
     width: auto;
   }
 
   .logoLink {
-    padding: 3px 6px;
+    padding: 3px 7px;
   }
 
   .mobileMenu {
-    top: 52px;
+    top: 58px;
   }
 }
