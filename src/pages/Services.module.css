@@ -305,7 +305,7 @@
   position: absolute;
   top: 1rem;
   right: 1.2rem;
-  font-family: 'Bodoni Moda', serif;
+  font-family: 'Playfair Display', serif;
   font-size: 3rem;
   line-height: 1;
   color: rgba(var(--brand-rgb), 0.18);
@@ -350,7 +350,7 @@
 }
 
 .industryContent h3 {
-  font-family: 'Bodoni Moda', serif;
+  font-family: 'Playfair Display', serif;
   font-size: 1.9rem;
   font-weight: 600;
   color: rgba(255, 247, 233, 0.97);
@@ -419,7 +419,7 @@
 
 .stepNumber {
   display: block;
-  font-family: 'Bodoni Moda', serif;
+  font-family: 'Playfair Display', serif;
   font-size: 3rem;
   font-weight: 700;
   color: rgba(var(--brand-rgb), 0.22);

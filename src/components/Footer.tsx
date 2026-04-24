@@ -20,7 +20,7 @@ const Footer = () => {
               <div className={styles.socialLinks}>
                 <a href="#" aria-label="LinkedIn"><FaLinkedin /></a>
                 <a href="#" aria-label="Twitter"><FaTwitter /></a>
-                <a href="#" aria-label="Instagram"><FaInstagram /></a>
+                <a href="https://www.instagram.com/antsar.trade/" target="_blank" rel="noreferrer" aria-label="Instagram"><FaInstagram /></a>
               </div>
             </div>
 
