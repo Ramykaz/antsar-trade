@@ -48,7 +48,7 @@
 
 .logo {
   margin: 0 auto;
-  font-size: clamp(1.45rem, 5vw, 3.6rem);
+  font-size: clamp(1.15rem, 5vw, 3.4rem);
   color: rgba(255, 247, 233, 0.97);
   max-width: 16ch;
   font-weight: 600;
@@ -129,7 +129,7 @@
 }
 
 .statsRow h3 {
-  font-family: 'Libre Baskerville', serif;
+  font-family: 'Bodoni Moda', serif;
   font-size: 1.7rem;
   font-weight: 700;
   color: var(--brand-2);
@@ -164,7 +164,7 @@
 }
 
 .sectionHeader h2 {
-  font-size: clamp(1.25rem, 3.5vw, 2.4rem);
+  font-size: clamp(1.05rem, 3.5vw, 2.3rem);
 }
 
 .sectionHeader h2::after {

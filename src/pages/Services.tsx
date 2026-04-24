@@ -69,14 +69,15 @@ const Services = () => {
     slidesToScroll: 1,
     initialSlide: 0,
     responsive: [
-      { breakpoint: 1100, settings: { slidesToShow: 2, slidesToScroll: 1 } },
-      { breakpoint: 720, settings: { slidesToShow: 1, slidesToScroll: 1, arrows: false } },
+      { breakpoint: 1100, settings: { slidesToShow: 2, slidesToScroll: 1, arrows: true } },
+      { breakpoint: 900, settings: { slidesToShow: 1, slidesToScroll: 1, arrows: false } },
     ],
     arrows: true,
     autoplay: true,
-    autoplaySpeed: 4000,
+    autoplaySpeed: 4500,
     cssEase: "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
     pauseOnHover: true,
+    swipeToSlide: true,
   };
 
   return (

@@ -44,7 +44,7 @@
 }
 
 .heroContent h1 {
-  font-size: clamp(1.4rem, 4.5vw, 3.2rem);
+  font-size: clamp(1.1rem, 4.5vw, 3rem);
   color: rgba(255, 247, 233, 0.97);
   margin-bottom: 0.85rem;
 }
@@ -241,11 +241,24 @@
 /* ── Industry Slider ───────────────────────────── */
 .industriesSlider {
   padding-bottom: 2.8rem;
+  width: 100%;
+  overflow: hidden;
 }
 
 .industrySlide {
   padding: 0 8px;
   box-sizing: border-box;
+}
+
+/* Fix slick internals for correct width calculation */
+:global(.slick-slider),
+:global(.slick-list),
+:global(.slick-track) {
+  width: 100%;
+}
+
+:global(.slick-slide > div) {
+  width: 100%;
 }
 
 .industryCard {
@@ -292,7 +305,7 @@
   position: absolute;
   top: 1rem;
   right: 1.2rem;
-  font-family: 'Libre Baskerville', serif;
+  font-family: 'Bodoni Moda', serif;
   font-size: 3rem;
   line-height: 1;
   color: rgba(var(--brand-rgb), 0.18);
@@ -337,7 +350,7 @@
 }
 
 .industryContent h3 {
-  font-family: 'Libre Baskerville', serif;
+  font-family: 'Bodoni Moda', serif;
   font-size: 1.9rem;
   font-weight: 600;
   color: rgba(255, 247, 233, 0.97);
@@ -406,7 +419,7 @@
 
 .stepNumber {
   display: block;
-  font-family: 'Libre Baskerville', serif;
+  font-family: 'Bodoni Moda', serif;
   font-size: 3rem;
   font-weight: 700;
   color: rgba(var(--brand-rgb), 0.22);
@@ -548,6 +561,16 @@
   }
 }
 
+@media (max-width: 900px) {
+  .industrySlide {
+    padding: 0 4px;
+  }
+
+  .industryCard {
+    height: 360px;
+  }
+}
+
 @media (max-width: 700px) {
   .hero {
     min-height: 54vh;
@@ -564,15 +587,43 @@
     grid-column: span 1;
   }
 
+  .industrySlide {
+    padding: 0 2px;
+  }
+
   .industryCard {
-    height: 360px;
+    height: 320px;
+  }
+
+  .industryContent {
+    padding: 1.2rem 1rem;
   }
 
   .industryContent h3 {
-    font-size: 1.55rem;
+    font-size: 1.35rem;
+  }
+
+  .industryIconWrap {
+    width: 44px;
+    height: 44px;
+    font-size: 1.5rem;
+    margin-bottom: 0.7rem;
+  }
+
+  .industryTag {
+    font-size: 0.65rem;
+    padding: 0.22rem 0.5rem;
+  }
+
+  .industryDivider {
+    margin-bottom: 0.6rem;
   }
 
   .processGrid {
     grid-template-columns: 1fr;
+  }
+
+  .sectionTitle {
+    font-size: clamp(1rem, 4vw, 2rem);
   }
 }
